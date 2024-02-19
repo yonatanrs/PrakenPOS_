@@ -1,0 +1,150 @@
+name: flutter_scs
+description: A new Flutter project.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+6
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  bloc:
+  bubble_tab_indicator:
+  build_runner:
+  connectivity:
+  cupertino_icons: 1.0.3
+  currency_text_input_formatter: 2.1.5
+  datetime_picker_formfield:
+  dio:
+  dropdown_search: ^5.0.6
+  search_choices: ^2.2.7
+  easy_web_view:
+  equatable:
+  firebase_messaging:
+  flutter_bloc:
+  syncfusion_flutter_pdfviewer: 19.4.54-beta
+#  flutter_full_pdf_viewer:
+  flutter_icons_null_safety: ^1.1.0
+  flutter_inappwebview:
+
+#  flutter_money_formatter:
+  mask_text_input_formatter: 2.3.0
+  money_formatter: 0.0.3
+  flutter_masked_text2: 0.9.1
+  flutter_custom_clippers: 2.1.0
+  flutter_screenutil:
+  flutter_staggered_grid_view: 0.4.1
+  flutter_svg:
+  fluttertoast:
+  gallery_saver:
+#  geocoding:
+  get:
+  geolocator:
+  hive_flutter:
+  hive_generator:
+  hive: 2.2.3
+  http:
+  image_picker:
+  lottie:
+  location_permissions:
+  money_input_formatter: 2.0.0
+  onesignal_flutter: 3.2.6
+  path_provider:
+  pdf:
+  provider:
+  pull_to_refresh:
+  qr_flutter :
+#  share:
+
+  share_extend:
+  shared_preferences:
+  trust_location:
+  flutter_barcode_scanner: 2.0.0
+  intl:
+#  syncfusion_flutter_pdf:
+  sembast:
+  path:
+  share_plus:
+  get_storage:
+  pluto_grid:
+  quickalert:
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons:
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "lib/assets/images/logo.png"
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - lib/assets/animations/coming_soon.json
+    - lib/assets/icons/Store.svg
+    - lib/assets/icons/Barter.svg
+    - lib/assets/icons/Chevron_left.svg
+    - lib/assets/icons/Chevron_right.svg
+    - lib/assets/icons/Delivery2.svg
+    - lib/assets/icons/Discount.svg
+    - lib/assets/icons/Folder.svg
+    - lib/assets/icons/Info.svg
+    - lib/assets/icons/Menu.svg
+    - lib/assets/icons/Price_tag.svg
+    - lib/assets/icons/Stock.svg
+    - lib/assets/icons/Store.svg
+    - lib/assets/icons/Trolley.svg
+    - lib/assets/icons/Coupon.svg
+    - lib/assets/icons/Favorite1.svg
+    - lib/assets/icons/List.svg
+    - lib/assets/icons/Plus.svg
+    - lib/assets/icons/Minus.svg
+    - lib/assets/icons/Reload.svg
+    - lib/assets/icons/Transaction.svg
+    - lib/assets/icons/state/ic_loading.svg
+    - lib/assets/icons/state/ic_error.svg
+    - lib/assets/icons/state/ic_no_data.svg
+    - lib/assets/images/logo.png
+  #    - images/a_dot_burr.jpeg
+  #    - images/a_dot_ham.jpeg
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: lib/assets/fonts/Lato-Regular.ttf
+          weight: 700
+    - family: Righteous
+      fonts:
+        - asset: lib/assets/fonts/Righteous-Regular.ttf
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "150370240863",
+    "firebase_url": "https://sales-canvasing-flutter.firebaseio.com",
+    "project_id": "sales-canvasing-flutter",
+    "storage_bucket": "sales-canvasing-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150370240863:android:80dc748f5c7ac3f54a8eea",
+        "android_client_info": {
+          "package_name": "com.example.flutter_scs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150370240863-i63060vkg09ui70eg6eif9p894h98871.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKLe_vzs7rZ9qlDtyiq2EkW4G20T5BxCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150370240863-i63060vkg09ui70eg6eif9p894h98871.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
