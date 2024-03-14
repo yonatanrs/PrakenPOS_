@@ -3,7 +3,7 @@ class ActivityEdit {
   int? id;
   String? number;
   String? customerId;
-  dynamic? vendor;
+  dynamic vendor;
   String? name;
   String? type;
   String? relation;

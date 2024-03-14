@@ -18,12 +18,11 @@ class AllProductView extends StatefulWidget {
 
 class _AllProductViewState extends State<AllProductView> {
   final _debouncer = Debounce(miliseconds: 5);
-  TextEditingController filterController = TextEditingController();
-  List<Product>? listProductsReal;
-  List<Product>? _listProduct;
+  TextEditingController filterController = new TextEditingController();
+  late List<Product> listProductsReal;
+  late List<Product> _listProduct;
   bool isSearching = false;
-  Box? _productBox;
-
+  late Box _productBox;
   @override
   void initState() {
     super.initState();
@@ -32,24 +31,27 @@ class _AllProductViewState extends State<AllProductView> {
 
   Future<Null> listProduct() async {
     await Future.delayed(Duration(seconds: 2));
-    Map<dynamic, dynamic> raw = _productBox!.toMap();
+    Map<dynamic, dynamic> raw = _productBox.toMap();
     List list = raw.values.toList();
     setState(() {
       listProductsReal = list.map((e) => e as Product).toList();
-      _listProduct = List<Product>.from(listProductsReal!);
+      _listProduct = listProductsReal;
     });
     return null;
   }
 
   Future<List<Product>> getListProduct() async {
     await Future.delayed(Duration(seconds: 2));
-    Map<dynamic, dynamic> raw = _productBox!.toMap();
+    Map<dynamic, dynamic> raw = _productBox.toMap();
     List list = raw.values.toList();
     return list.map((e) => e as Product).toList();
   }
 
+
   @override
   Widget build(BuildContext context) {
+
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -74,48 +76,45 @@ class _AllProductViewState extends State<AllProductView> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+              // padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
               child: TextField(
                 controller: filterController,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(ScreenUtil().setHeight(10)),
-                  hintText: 'Search by Name or brand',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search, color: colorBackground),
-                    onPressed: () {
-                      String value = filterController.text;
-                      _debouncer.run(() {
-                        setState(() {
-                          _listProduct = listProductsReal
-                              ?.where((element) =>
-                          (element.nameProduct
-                              ?.toLowerCase()
-                              .contains(value.toLowerCase()) ??
-                              false) ||
-                              (element.brand
-                                  ?.toLowerCase()
-                                  .contains(value.toLowerCase()) ??
-                                  false))
-                              .toList() ??
-                              [];
-                        });
-                      });
-                    },
-                  ),
-                ),
+                    contentPadding: EdgeInsets.all(ScreenUtil().setHeight(10)),
+                    hintText: 'Search by Name or brand',
+                    suffixIcon: IconButton(
+                        icon: Icon(Icons.search, color: colorBackground),
+                        onPressed: () {
+                          String value = filterController.text;
+                          _debouncer.run(() {
+                            setState(() {
+                              _listProduct = listProductsReal
+                                  .where((element) =>
+                                      element.nameProduct
+                                          !.toLowerCase()
+                                          .contains(value.toLowerCase()) ||
+                                      element.brand
+                                          !.toLowerCase()
+                                          .contains(value.toLowerCase()))
+                                  .toList();
+                            });
+                          });
+                        })),
               ),
             ),
             Expanded(
-              child: RefreshIndicator(
-                onRefresh: listProduct,
-                child: FutureBuilder(
+                child: RefreshIndicator(
+              onRefresh: listProduct,
+              child: FutureBuilder(
                   future: getListProduct(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.hasError != true) {
+                        // print("ini banyaknya item di list : ${_listProduct.length}");
                         _listProduct == null
                             ? _listProduct = listProductsReal = snapshot.data
                             : _listProduct = _listProduct;
-                        if (_listProduct?.isEmpty ?? true) {
+                        if (_listProduct.length == 0) {
                           return Center(
                             child: Column(
                               children: <Widget>[
@@ -132,12 +131,11 @@ class _AllProductViewState extends State<AllProductView> {
                           );
                         }
                         return ListView.builder(
-                          itemCount: _listProduct?.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              CardAllProductAdapter(
-                                models: _listProduct![index],
-                              ),
-                        );
+                            itemCount: _listProduct.length,
+                            itemBuilder: (BuildContext context, int index) =>
+                                CardAllProductAdapter(
+                                  models: _listProduct[index],
+                                ));
                       } else {
                         print(snapshot.error.toString());
                       }
@@ -161,15 +159,27 @@ class _AllProductViewState extends State<AllProductView> {
                       return WidgetStateLoading();
                     }
                     return Container();
-                  },
-                ),
-              ),
-            ),
+                  }),
+            ))
           ],
         ),
       ),
     );
   }
+
+  // void searchProduct(){
+  //   setState(() {
+  //     _listProduct = listProductsReal
+  //         .where((element) =>
+  //     element.nameProduct
+  //         .toLowerCase()
+  //         .contains(value.toLowerCase()) ||
+  //         element.brand
+  //             .toLowerCase()
+  //             .contains(value.toLowerCase()))
+  //         .toList();
+  //   });
+  // }
 
   Future<bool> _onBackPress() async {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

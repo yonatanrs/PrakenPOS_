@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_scs/ext/rx_ext.dart';
-import 'package:flutter_scs/view/MainMenuView.dart';
 import 'package:flutter_scs/view/exhibition/IdAndValue.dart';
-import 'package:flutter_scs/view/exhibition/exhibition-page.dart';
 import 'package:flutter_scs/view/exhibition/exhibition-product-model.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
@@ -32,7 +28,6 @@ import 'exhibition-and-customer-wrapper.dart';
 import 'exhibition-product-input-state.dart';
 import 'exhibition-wrapper.dart';
 import 'input-page-dropdown-state.dart';
-import 'package:collection/collection.dart';
 
 class ExhibitionPresenter extends GetxController {
 
@@ -151,7 +146,7 @@ class ExhibitionPresenter extends GetxController {
           }
       );
       var listData = jsonDecode(response.body);
-      print("listDataExhibitionCoett : ${listData}");
+      print("listDataExhibitionCoett : $listData");
       print("urlListExhibition : $url");
       print("token : $token");
       print('statusListExhibition : ${response.statusCode}');
@@ -167,7 +162,7 @@ class ExhibitionPresenter extends GetxController {
     String? idSales = prefs.getString("idSales");
     var url = "${ApiConstant().urlApi}api/Transaction/ExhibitionDetail?sales=$idSales&id=$idTransaction";
 
-    print("url get detailExhibition : ${url}");
+    print("url get detailExhibition : $url");
     final response = await get(
       Uri.parse(url),
       headers: {
@@ -191,7 +186,7 @@ class ExhibitionPresenter extends GetxController {
   getFromSharedPrefs()async{
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Salesman = (await prefs.getString("getName"))!;
+    Salesman = (prefs.getString("getName"))!;
     // final box = GetStorage();
     // Salesman = box.read('getName');
     print(Salesman);
@@ -229,7 +224,7 @@ class ExhibitionPresenter extends GetxController {
     );
     var listData = jsonDecode(response.body);
     print("url getDropdownProduct :$url");
-    print("RESPONSE product : ${listData}");
+    print("RESPONSE product : $listData");
     _productWrappedInputPageDropdownState.loadingStateWrapper?.value = 1;
     _productWrappedInputPageDropdownState.choiceListWrapper?.value = listData.map<IdAndValue<String>>((element) => IdAndValue<String>(id: element["itemId"], value: element["name"])).toList();
     // _productWrappedInputPageDropdownState.choiceListWrapper.value = listData.map<IdAndValue<String>>((element) => IdAndValue<String>(id: element["idProduct"], value: element["nameProduct"])).toList();
@@ -496,7 +491,7 @@ class ExhibitionPresenter extends GetxController {
     String? username = preferences.getString("username");
     var idSales = preferences.getString("idSales");
     String? idDevice = preferences.getString("idDevice");
-    String idOrder = "PRB${username}${DateFormat("ddMMyyyyhhmmss").format(DateTime.now())}";
+    String idOrder = "PRB$username${DateFormat("ddMMyyyyhhmmss").format(DateTime.now())}";
     List<ExhibitionProgramInputState>? exhibitionProgramInputState = exhibitionProgramInputStateRx.value.exhibitionProgramInputState;
     final totalHarga = exhibitionProgramInputState!.map((e) => e.harga).toList();
     final isiBody = jsonEncode(<String, dynamic>{
@@ -583,7 +578,7 @@ class ExhibitionPresenter extends GetxController {
     String? username = preferences.getString("username");
     var idSales = preferences.getString("idSales");
     String? idDevice = preferences.getString("idDevice");
-    String idOrder = "PRB${username}${DateFormat("ddMMyyyyhhmmss").format(DateTime.now())}";
+    String idOrder = "PRB$username${DateFormat("ddMMyyyyhhmmss").format(DateTime.now())}";
     List<ExhibitionProgramInputState>? exhibitionProgramInputState = exhibitionProgramInputStateRx.value.exhibitionProgramInputState;
     final totalHarga = exhibitionProgramInputState!.map((e) => e.harga).toList();
     print("total harga : ${sumList(totalHarga)}");
@@ -623,7 +618,7 @@ class ExhibitionPresenter extends GetxController {
   }
 
   Future<void> generateInvoice(dynamic dataProduct, dynamic idTransaksi, dynamic dataCustomer) async {
-    print("index ${dataCustomer}");
+    print("index $dataCustomer");
     //Create a PDF document.
     final PdfDocument document = PdfDocument();
     //Add page to the PDF
@@ -646,9 +641,9 @@ class ExhibitionPresenter extends GetxController {
     final List<int> bytes = document.save();
     document.dispose();
     // String pdfName = "Invoice";
-    String pdfName = "Invoice ${idTransaksi}.pdf";
+    String pdfName = "Invoice $idTransaksi.pdf";
     Directory directory = (await getApplicationDocumentsDirectory());
-    File file = await File('${directory.path}/$pdfName');
+    File file = File('${directory.path}/$pdfName');
     await file.writeAsBytes(bytes,mode: FileMode.write, flush: true);
     _updateState();
     Get.bottomSheet(
@@ -698,7 +693,7 @@ class ExhibitionPresenter extends GetxController {
     final DateFormat format = DateFormat.yMMMMd('en_US');
     final prambananKencana = "PT PRAMBANAN KENCANA";
     final String invoiceNumber1 =
-        '\r\n\r\nOrder Number: ${idTransaksi}\r\n\r\nDate: ${format.format(DateTime.now())}\r\n\r\nSalesman: $Salesman';
+        '\r\n\r\nOrder Number: $idTransaksi\r\n\r\nDate: ${format.format(DateTime.now())}\r\n\r\nSalesman: $Salesman';
     final String invoiceNumber2 =
         '\r\n\r\nCust Name: ${dataCustomer['name']}\r\n\r\nCompany: ${dataCustomer['company']}\r\n\r\nPhone No: ${dataCustomer['tlp']}';
     final Size contentSize = contentFont.measureString(invoiceNumber1);
@@ -799,7 +794,7 @@ class ExhibitionPresenter extends GetxController {
     //Add rows
     for (int i = 0; i < data.length ; i++){
       addProducts('${data[i]['idProduct']}', '${data[i]['nameProduct']}',data[i]['unit'], data[i]['qty'], double.parse(data[i]['price'].toString()), data[i]['discount']??0 , double.parse(data[i]['totalAmount'].toString()), grid);
-    };
+    }
     //Apply the table built-in style
     grid.applyBuiltInStyle(PdfGridBuiltInStyle.listTable4Accent5);
     //Set gird columns width

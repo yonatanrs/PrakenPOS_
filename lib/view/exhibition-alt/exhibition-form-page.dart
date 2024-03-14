@@ -192,7 +192,7 @@ class _ExhibitionFormPageState extends State<ExhibitionFormPage> {
                       child: Text(item),
                       value: item,
                     );
-                  })?.toList() ??
+                  }).toList() ??
                       [],
                   onChanged: (value) {
                     valUnitProductValue = value;

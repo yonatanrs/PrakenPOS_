@@ -406,7 +406,9 @@ class TransactionPresenter extends GetxController {
     return true;
   }
 
-  void submitPromotionProgram() async {
+
+
+  Future<void> submitPromotionProgram() async {
     print("waw");
     if (!promotionProgramInputValidation()) {
       return;
@@ -462,12 +464,12 @@ class TransactionPresenter extends GetxController {
     print("token submit : $token");
     print("body submit : $isiBody");
     print("status submit prod : ${response.statusCode}");
-    Future.delayed(Duration(seconds: 2),(){
+    Future.delayed(Duration(seconds: 0),(){
       if (response.statusCode == 201||response.statusCode == 200) {
         // If the server did return a 201 CREATED response,
         // then parse the JSON.
         final tabController = Get.put(DashboadOrderTakingTabController());
-        Future.delayed(Duration(seconds: 2),(){
+        Future.delayed(Duration(seconds: 0),(){
           tabController.initialIndex = 1;
           Get.offAll(
             MainMenuView(),
@@ -503,97 +505,97 @@ class TransactionPresenter extends GetxController {
     );
   }
 
-  void submitPromotionProgramAll() async {
-    if (!promotionProgramInputValidation()) {
-      return;
-    }
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? token = preferences.getString("token");
-    String? username = preferences.getString("username");
-    final isiBody = jsonEncode(<String, dynamic>{
-      "PPtype": 1,
-      "PPname": "${customerNameInputPageDropdownStateRx.value.selectedChoice?.id}-$username-${DateFormat("dd-mm-yyyy hh:mm:ss").format(DateTime.now())}",
-      "PPnum": "${customerNameInputPageDropdownStateRx.value.selectedChoice?.id}-$username-${DateFormat("dd-mm-yyyy hh:mm:ss").format(DateTime.now())}",
-      "Location": preferences.getString("so"),
-      "Vendor": "",
-      "CustomerId": customerNameInputPageDropdownStateRx.value.selectedChoice?.id,
-      "Lines": promotionProgramInputStateRx.value.promotionProgramInputState?.map<Map<String, dynamic>>((element) => <String, dynamic>{
-        "Customer": customerNameInputPageDropdownStateRx.value.selectedChoice?.id,
-        "ItemId": element.productTransactionPageDropdownState?.selectedChoiceWrapper?.value?.id,
-        "QtyFrom": element.qtyTransaction?.text,
-        "QtyTo": element.qtyTransaction?.text,
-        "Unit": element.unitPageDropdownState?.selectedChoice,
-        "Multiply": 1,
-        "FromDate": "${DateTime.now()}",//"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".replaceAll("${DateFormat("dd-mm-yyyy").format(DateTime.now())}", "${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[2]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[1]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[0]}"),
-        "ToDate": "${DateTime.now()}",//"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".replaceAll("${DateFormat("dd-mm-yyyy").format(DateTime.now())}", "${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[2]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[1]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[0]}"),
-        "Currency": "IDR",
-        "type": 1,
-        // "Pct1": element.discTransaction?.text,
-        "Pct2": 0,
-        "Pct3": 0,
-        "Pct4": 0,
-        "Value1": 0.0,
-        "Value2": 0.0,
-        "SupplyItemOnlyOnce": 0,
-        "SupplyItem": "",
-        "QtySupply": 0,
-        "UnitSupply": "",
-        "SalesPrice": element.priceTransaction!.text.isEmpty ? 0 : int.parse(element.priceTransaction!.text.replaceAll(RegExp(r"[.,]"), "")),
-        "PriceTo": ""
-      }).toList()
-    });
-    print("isiBody :$isiBody");
-    List<PromotionProgramInputState> promotionProgramInputState = promotionProgramInputStateRx.value.promotionProgramInputState!.toList();
-    print("mazda :${promotionProgramInputState.map((e) => e.totalTransaction?.text).toList()}");
-    List dataTotal = promotionProgramInputState.map((e) => e.totalTransaction?.text).toList();
-    final response = await post(
-        Uri.parse('http://119.18.157.236:8869/api/activity?username=$username'),
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': '$token',
-        },
-        body: isiBody
-    );
-    print("status submit alt : ${response.statusCode}");
-    Future.delayed(Duration(seconds: 2),(){
-      if (response.statusCode == 201) {
-        // If the server did return a 201 CREATED response,
-        // then parse the JSON.
-        final tabController = Get.put(DashboadOrderTakingTabController());
-        Future.delayed(Duration(seconds: 2),(){
-          tabController.initialIndex = 1;
-          // Get.offAll(
-          //   MainMenuView(),
-          // );
-          // Get.to(DashboardOrderTaking(initialIndexs: 1,));
-        });
-        // Get.dialog(
-        //     SimpleDialog(
-        //       title: Text("Success"),
-        //       children: [
-        //         Center(
-        //           child: CircularProgressIndicator(),
-        //         )
-        //       ],
-        //     ),barrierDismissible: false);
-      } else {
-        print("token : $token");
-        Get.dialog(SimpleDialog(
-          title: Text("Error"),
-          children: [
-            Center(
-              child: Text("${response.statusCode}\n${response.body.replaceAll(r"\'", "'")}",style: TextStyle(color: Colors.red),textAlign: TextAlign.center),
-            ),
-            Center(
-              child: Icon(Icons.error),
-            )
-          ],
-        ));
-        print(response.body);
-      }
-    }
-    );
-  }
+  // Future<void> submitPromotionProgramAll() async {
+  //   if (!promotionProgramInputValidation()) {
+  //     return;
+  //   }
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   String? token = preferences.getString("token");
+  //   String? username = preferences.getString("username");
+  //   final isiBody = jsonEncode(<String, dynamic>{
+  //     "PPtype": 1,
+  //     "PPname": "${customerNameInputPageDropdownStateRx.value.selectedChoice?.id}-$username-${DateFormat("dd-mm-yyyy hh:mm:ss").format(DateTime.now())}",
+  //     "PPnum": "${customerNameInputPageDropdownStateRx.value.selectedChoice?.id}-$username-${DateFormat("dd-mm-yyyy hh:mm:ss").format(DateTime.now())}",
+  //     "Location": preferences.getString("so"),
+  //     "Vendor": "",
+  //     "CustomerId": customerNameInputPageDropdownStateRx.value.selectedChoice?.id,
+  //     "Lines": promotionProgramInputStateRx.value.promotionProgramInputState?.map<Map<String, dynamic>>((element) => <String, dynamic>{
+  //       "Customer": customerNameInputPageDropdownStateRx.value.selectedChoice?.id,
+  //       "ItemId": element.productTransactionPageDropdownState?.selectedChoiceWrapper?.value?.id,
+  //       "QtyFrom": element.qtyTransaction?.text,
+  //       "QtyTo": element.qtyTransaction?.text,
+  //       "Unit": element.unitPageDropdownState?.selectedChoice,
+  //       "Multiply": 1,
+  //       "FromDate": "${DateTime.now()}",//"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".replaceAll("${DateFormat("dd-mm-yyyy").format(DateTime.now())}", "${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[2]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[1]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[0]}"),
+  //       "ToDate": "${DateTime.now()}",//"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".replaceAll("${DateFormat("dd-mm-yyyy").format(DateTime.now())}", "${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[2]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[1]}-${"${DateFormat("dd-mm-yyyy").format(DateTime.now())}".split('-')[0]}"),
+  //       "Currency": "IDR",
+  //       "type": 1,
+  //       // "Pct1": element.discTransaction?.text,
+  //       "Pct2": 0,
+  //       "Pct3": 0,
+  //       "Pct4": 0,
+  //       "Value1": 0.0,
+  //       "Value2": 0.0,
+  //       "SupplyItemOnlyOnce": 0,
+  //       "SupplyItem": "",
+  //       "QtySupply": 0,
+  //       "UnitSupply": "",
+  //       "SalesPrice": element.priceTransaction!.text.isEmpty ? 0 : int.parse(element.priceTransaction!.text.replaceAll(RegExp(r"[.,]"), "")),
+  //       "PriceTo": ""
+  //     }).toList()
+  //   });
+  //   print("isiBody :$isiBody");
+  //   List<PromotionProgramInputState> promotionProgramInputState = promotionProgramInputStateRx.value.promotionProgramInputState!.toList();
+  //   print("mazda :${promotionProgramInputState.map((e) => e.totalTransaction?.text).toList()}");
+  //   List dataTotal = promotionProgramInputState.map((e) => e.totalTransaction?.text).toList();
+  //   final response = await post(
+  //       Uri.parse('http://119.18.157.236:8869/api/activity?username=$username'),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         'Authorization': '$token',
+  //       },
+  //       body: isiBody
+  //   );
+  //   print("status submit alt : ${response.statusCode}");
+  //   Future.delayed(Duration(seconds: 2),(){
+  //     if (response.statusCode == 201) {
+  //       // If the server did return a 201 CREATED response,
+  //       // then parse the JSON.
+  //       final tabController = Get.put(DashboadOrderTakingTabController());
+  //       Future.delayed(Duration(seconds: 2),(){
+  //         tabController.initialIndex = 1;
+  //         // Get.offAll(
+  //         //   MainMenuView(),
+  //         // );
+  //         // Get.to(DashboardOrderTaking(initialIndexs: 1,));
+  //       });
+  //       // Get.dialog(
+  //       //     SimpleDialog(
+  //       //       title: Text("Success"),
+  //       //       children: [
+  //       //         Center(
+  //       //           child: CircularProgressIndicator(),
+  //       //         )
+  //       //       ],
+  //       //     ),barrierDismissible: false);
+  //     } else {
+  //       print("token : $token");
+  //       Get.dialog(SimpleDialog(
+  //         title: Text("Error"),
+  //         children: [
+  //           Center(
+  //             child: Text("${response.statusCode}\n${response.body.replaceAll(r"\'", "'")}",style: TextStyle(color: Colors.red),textAlign: TextAlign.center),
+  //           ),
+  //           Center(
+  //             child: Icon(Icons.error),
+  //           )
+  //         ],
+  //       ));
+  //       print(response.body);
+  //     }
+  //   }
+  //   );
+  // }
 
   void _updateState() {
     promotionTypeInputPageDropdownStateRx.valueFromLast((value) => value.copy());

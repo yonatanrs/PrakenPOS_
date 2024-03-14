@@ -203,7 +203,7 @@ class _HistoryNomorPPState extends State<HistoryNomorPP> {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
                   return HistoryLines(
-                    numberPP: promosi?.namePP,
+                    numberPP: promosi.namePP,
                     idEmp: _user.id,
                   );
                 }));
@@ -229,7 +229,7 @@ class _HistoryNomorPPState extends State<HistoryNomorPP> {
     Hive.init(dir.path);
     Box _userBox = await Hive.openBox('users');
     List<User> listUser = _userBox.values.map((e) => e as User).toList();
-    print("userBox hive : ${listUser}");
+    print("userBox hive : $listUser");
     SharedPreferences pref = await SharedPreferences.getInstance();
     Future.delayed(Duration(milliseconds: 20));
     setState(() {

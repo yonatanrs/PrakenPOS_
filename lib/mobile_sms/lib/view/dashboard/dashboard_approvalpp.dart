@@ -24,7 +24,7 @@ class _DashboardApprovalPPState extends State<DashboardApprovalPP> {
     }else if(widget.initialIndexs==1){
       tabController.initialIndex = 1;
       Future.delayed(Duration(seconds: 1),(){
-        tabController.controller.animateTo(tabController.initialIndex!);
+        tabController.controller.animateTo(tabController.initialIndex);
       });
     }
   }
@@ -49,7 +49,7 @@ class _DashboardApprovalPPState extends State<DashboardApprovalPP> {
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: DefaultTabController(
-            initialIndex: tabController.initialIndex!,
+            initialIndex: tabController.initialIndex,
             length: 2,
             child: Column(
               mainAxisSize: MainAxisSize.min,

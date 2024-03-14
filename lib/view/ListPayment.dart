@@ -90,7 +90,7 @@ class _ListPaymentState extends State<ListPayment> {
                   print("idOrder : ${widget.idOrder}");
                   var url = "${ApiConstant().urlApi}api/DetailPayment?idOrder=${widget.idOrder}";
                   final response = await put(Uri.parse(url));
-                  print("url cash ${url}");
+                  print("url cash $url");
                   print("status : ${response.statusCode}");
                   print("status : ${response.body}");
                   if(response.statusCode==200){

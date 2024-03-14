@@ -86,9 +86,18 @@ class _AbsentViewState extends State<AbsentView> {
   void _navigateToCameraScreen() async {
     final _picker = ImagePicker();
     PickedFile? file = await _picker.getImage(source: ImageSource.camera, imageQuality: 85);
-    GallerySaver.saveImage(file!.path).then((value) => print('Image Saved'));
-    var formatPath = file.path;
-    _validateFileSize(File(formatPath));
+
+    // Check if a file was picked
+    if (file != null) {
+      // Since file is not null, it's safe to use the `path` property
+      GallerySaver.saveImage(file.path).then((value) => print('Image Saved'));
+      var formatPath = file.path;
+      _validateFileSize(File(formatPath));
+    } else {
+      // Handle the case where the user did not pick an image
+      // For example, show a message or log an error
+      ToastCustom().FlutterToast('No image selected', colorError, colorBlueSky);
+    }
   }
 
   void _validateFileSize(File file) async {

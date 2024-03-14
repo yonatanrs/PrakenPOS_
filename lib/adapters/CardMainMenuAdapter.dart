@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_scs/assets/style.dart';
 import 'package:flutter_scs/mobile_sms/lib/view/dashboard/dashboard_approvalpp.dart';
-import 'package:flutter_scs/mobile_sms/lib/view/dashboard/dashboard_ordertaking.dart';
 import 'package:flutter_scs/mobile_sms/lib/view/dashboard/dashboard_ordersample.dart';
+import 'package:flutter_scs/mobile_sms/lib/view/dashboard/dashboard_ordertaking.dart';
 import 'package:flutter_scs/view/customer/AllCustomerView.dart';
 import 'package:flutter_scs/view/exhibition/exhibition-page.dart';
 import 'package:flutter_scs/view/priceDiscount/PriceDiscountView.dart';
 import 'package:flutter_scs/view/product/AllProductView.dart';
-import 'package:flutter_scs/view/reconsile-exhibition/reconsile_exhibition_page.dart';
 import 'package:flutter_scs/view/reconsile-exhibition/reconsile_exhibition_view.dart';
 import 'package:flutter_scs/view/reconsile/ReconsileView.dart';
 import 'package:flutter_scs/view/stock/StockView.dart';
@@ -27,7 +26,7 @@ class CardMainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("nameIcon ${nameIcon}");
+    print("nameIcon $nameIcon");
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

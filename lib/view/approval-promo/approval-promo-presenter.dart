@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scs/models/ApiConstant.dart';
 import 'package:flutter_scs/models/ApprovalPromo.dart';
 import 'package:flutter_scs/models/promosi.dart';
-import 'package:flutter_scs/parameters/UrlAPI.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';

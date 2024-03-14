@@ -18,17 +18,13 @@ class AbsentController extends GetxController with StateMixin<AbsentModel> {
 
     try {
       var dataAbsent = await AbsentServices.getAbsent(idSales);
-      if (dataAbsent == null) {
-        change(null, status: RxStatus.empty());
-      } else {
-        change(
-            AbsentModel(
-                absentResponse: dataAbsent,
-                idSales: idSales,
-                currentPosition: position),
-            status: RxStatus.success());
-      }
-    } on DioError catch (e) {
+      change(
+          AbsentModel(
+              absentResponse: dataAbsent,
+              idSales: idSales,
+              currentPosition: position),
+          status: RxStatus.success());
+        } on DioError catch (e) {
       if (e.type == DioErrorType.connectTimeout ||
           e.type == DioErrorType.receiveTimeout) {
         change(null, status: RxStatus.error("No Connection"));

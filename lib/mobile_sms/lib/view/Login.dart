@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/global.dart';
 import 'package:flutter_scs/mobile_sms/lib/models/User.dart';
 import 'package:flutter_scs/mobile_sms/lib/providers/LoginProvider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,25 +59,14 @@ class _LoginViewState extends State<LoginView> with WidgetsBindingObserver {
   }
 
   void login(String username, String password, BuildContext context) {
-    if (code == null) {
-      Fluttertoast.showToast(
-          msg: 'Tolong pilih server terlebih dahulu.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 5,
-          backgroundColor: colorWarning,
-          textColor: colorPrimary,
-          fontSize: ScreenUtil().setSp(16));
-    } else {
-      Text("Loading");
-      Provider.of<LoginProvider>(context, listen: false).setMessage(username, password, context, code).then((_) {
-        int statusCode = Provider.of<LoginProvider>(context, listen: false).getStatus;
-        if (statusCode == 200 && _rememberMe) {
-          saveCredentials(username, password);
-        }
-      });
+    Text("Loading");
+    Provider.of<LoginProvider>(context, listen: false).setMessage(username, password, context, code).then((_) {
+      int statusCode = Provider.of<LoginProvider>(context, listen: false).getStatus;
+      if (statusCode == 200 && _rememberMe) {
+        saveCredentials(username, password);
+      }
+    });
     }
-  }
 
 
 
@@ -283,7 +270,7 @@ class _LoginViewState extends State<LoginView> with WidgetsBindingObserver {
                                 message.getMessage.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).errorColor,
+                                    color: Theme.of(context).colorScheme.error,
                                     fontSize: ScreenUtil().setSp(15)),
                               ),
                             )),

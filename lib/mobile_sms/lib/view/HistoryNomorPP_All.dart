@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_scs/mobile_sms/lib/models/ApiConstant.dart';
@@ -15,7 +14,6 @@ import '../assets/widgets/Debounce.dart';
 import '../assets/widgets/TextResultCard.dart';
 import '../models/Promosi.dart';
 import '../models/User.dart';
-import 'HistoryLines.dart';
 import 'Login.dart';
 
 class HistoryAll extends StatefulWidget {
@@ -101,7 +99,7 @@ class _HistoryAllState extends State<HistoryAll> {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
                             return HistoryLinesAll(
-                              numberPP: promosi?.namePP,
+                              numberPP: promosi.namePP,
                               idEmp: _user.id,
                             );
                           }));
@@ -225,7 +223,7 @@ class _HistoryAllState extends State<HistoryAll> {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) {
                             return HistoryLinesAllEdit(
-                              numberPP: promosi?.namePP,
+                              numberPP: promosi.namePP,
                               idEmp: _user.id,
                             );
                           }));
@@ -364,7 +362,7 @@ class _HistoryAllState extends State<HistoryAll> {
               onRefresh: listHistory,
               child: FutureBuilder(
                 future: Promosi.getAllListPromosi(
-                    0, code, _user?.token??"", _user?.username??""),
+                    0, code, _user.token??"", _user.username??""),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError != true) {

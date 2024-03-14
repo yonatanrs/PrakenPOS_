@@ -11,7 +11,7 @@ getFromSharedPrefs()async{
   // ipAdress = prefs.getString("ipAddress")??"hrms.prb.co.id:8877";
 
   code = box.read("codeEnpoint")??1;
-  ipAdress = box.read("ipAddress")??"http://api-scs.prb.co.id/"/*"hrms.prb.co.id:8877"*/;
+  ipAdress = box.read("ipAddress")??"api-scs.prb.co.id";
 }
 
 class ApiConstant {
@@ -19,15 +19,15 @@ class ApiConstant {
   ApiConstant() {
     final box = GetStorage();
     code = box.read("codeEnpoint")??1;
-    ipAdress = box.read("ipAddress")??"http://api-scs.prb.co.id/"/*"hrms.prb.co.id:8877"*/;
-    print("code : ${code}");
-    print("ipAddress : ${ipAdress}");
+    ipAdress = box.read("ipAddress")??"api-scs.prb.co.id";
+    print("code : $code");
+    print("ipAddress : $ipAdress");
     if (code == 0) {
       //domain utama
       urlApi = 'http://$ipAdress/';
     } else if (code == 1) {
       //jlm
-      urlApi = 'http://119.18.157.236:8877/'; //debuging1
+      urlApi = 'http://api-scs.prb.co.id/'; //debuging1
       // urlApi = 'http://192.168.0.13:8897/'; //debuging2
       // urlApi = 'http://119.18.157.236:8878/'; //release
     }

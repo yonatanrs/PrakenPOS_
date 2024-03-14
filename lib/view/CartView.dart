@@ -15,7 +15,6 @@ import 'package:flutter_scs/view/ListProductView.dart';
 import 'package:flutter_scs/view/transaction/MainTransactionView.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/utils.dart';
 import 'package:http/http.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';

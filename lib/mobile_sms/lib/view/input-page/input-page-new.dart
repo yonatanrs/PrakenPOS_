@@ -7,7 +7,6 @@ import 'package:search_choices/search_choices.dart';
 import '../../models/IdAndValue.dart';
 import '../../models/input-page-wrapper.dart';
 import '../../models/promotion-program-input-state.dart';
-import '../dashboard/dashboard_pp.dart';
 import 'input-page-presenter-new.dart';
 
 class InputPageNew extends StatefulWidget {
@@ -1304,7 +1303,7 @@ class _InputPageNewState extends State<InputPageNew> {
                                                       for (int i = 0;
                                                           i <
                                                               promotionProgramInputStateList
-                                                                  !.length;
+                                                                  .length;
                                                           i++) {
                                                         PromotionProgramInputState
                                                             element =

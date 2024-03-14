@@ -10,7 +10,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'assets/global.dart';
 import 'models/User.dart';
-import 'view/HistoryNomorPP.dart';
 
 
 void main() => runApp(MyApp());
@@ -42,7 +41,7 @@ class _MyAppState extends State<MyApp> {
     OneSignal.shared.setAppId("ffad8398-fdf5-4aef-a16b-a33696f48630");
     OneSignal.shared.getDeviceState().then((deviceState) {
       onesignalUserID = deviceState!.userId!;
-      print("playerID ${onesignalUserID}");
+      print("playerID $onesignalUserID");
       setState(() {
         prefs.setString("getPlayerID", onesignalUserID);
       });
@@ -93,21 +92,19 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Poppins',
           primaryColorDark: colorPrimary,
           primaryColor: colorSecondary,
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            secondary: colorAccent, // Used where accentColor was previously used
-          ),
-          errorColor: colorError,
           dialogTheme: DialogTheme(
               backgroundColor: colorNetral,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
-                  side: BorderSide(color: colorAccent))),
+                  side: BorderSide(color: colorAccent))), colorScheme: ColorScheme.fromSwatch().copyWith(
+            secondary: colorAccent, // Used where accentColor was previously used
+          ).copyWith(error: colorError),
         ),
         builder:  (context, widget) {
           // ScreenUtil.init();
           return MediaQuery(
             //Setting font does not change with system font size
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
             child: widget!,
           );
         },
@@ -129,9 +126,6 @@ class _MyAppState extends State<MyApp> {
     Future.delayed(Duration(milliseconds: 20));
     setState(() {
       flag = pref.getInt("flag")!;
-      if(flag == null){
-        pref.setInt("flag", 0);
-      }
 
       value = pref.getString("date")!;
       if (value != dateCurrent) {

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scs/assets/style.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_scs/view/transaction/MainTransactionView.dart';
-import 'package:get_storage/get_storage.dart';
 
 class WebViewPayment extends StatefulWidget {
   @override
@@ -105,12 +104,10 @@ class _PaymentViewState extends State<WebViewPayment> {
   }
 
   Future<bool> _onBackPress() async {
-    if (_webViewController != null) {
-      await Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) {
-        return MainTransactionView(indexTab: 0);
-      }));
-    }
-    return true;
+    await Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) {
+      return MainTransactionView(indexTab: 0);
+    }));
+      return true;
   }
 }

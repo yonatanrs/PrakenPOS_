@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -98,7 +97,7 @@ class _HistoryPendingState extends State<HistoryPending> {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
                       return HistoryLines(
-                        numberPP: promosi?.namePP,
+                        numberPP: promosi.namePP,
                         idEmp: _user!.id,
                       );
                     }));
@@ -124,7 +123,7 @@ class _HistoryPendingState extends State<HistoryPending> {
     Hive.init(dir.path);
     Box _userBox = await Hive.openBox('users');
     List<User> listUser = _userBox.values.map((e) => e as User).toList();
-    print("userBox hive : ${listUser}");
+    print("userBox hive : $listUser");
     SharedPreferences pref = await SharedPreferences.getInstance();
     Future.delayed(Duration(milliseconds: 20));
     setState(() {

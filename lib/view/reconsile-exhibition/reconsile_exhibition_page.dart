@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_scs/models/ApiConstant.dart';
 import 'package:flutter_scs/view/reconsile-exhibition/reconsile_exhibition_view.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +42,7 @@ class _ReconsileExhibitionPageState extends State<ReconsileExhibitionPage> {
     if (response.statusCode == 200) {
       setState(() {
         data = jsonDecode(response.body);
-        print("data : ${data}");
+        print("data : $data");
       });
     } else {
       jsonDecode(response.body);
@@ -62,7 +61,7 @@ class _ReconsileExhibitionPageState extends State<ReconsileExhibitionPage> {
     List dataIdItem = data.map((element) => element['idItem']).toList();
     List dataFisikQty = fisikControllerList.map((element) => element.text.isEmpty?element.text=0.toString():element.text).toList();
     List dataqtySystem = data.map((element) => element['inventQty']).toList();
-    log("dataFisikQty :${dataFisikQty}");
+    log("dataFisikQty :$dataFisikQty");
     Map<String, Object> body (String idProduct, String unit, int qtyFisik, double qtySystem){
       var isiBody =  {
         "idProduct": idProduct,

@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scs/mobile_sms/lib/ext/rx_ext.dart';
 import 'package:flutter_scs/mobile_sms/lib/view/dashboard/DashboardPage.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +12,6 @@ import '../../models/IdAndValue.dart';
 import '../../models/Wrapper.dart';
 import '../../models/input-page-wrapper.dart';
 import '../../models/promotion-program-input-state.dart';
-import '../HistoryNomorPP.dart';
 import '../dashboard/dashboard_pp.dart';
 import 'input-page-dropdown-state.dart';
 
@@ -23,8 +20,8 @@ class InputPagePresenterNew extends GetxController {
   RxBool onTap = false.obs;
 
   Rx<InputPageWrapper> promotionProgramInputStateRx = InputPageWrapper(
-    promotionProgramInputState: [],
-    isAddItem: false
+      promotionProgramInputState: [],
+      isAddItem: false
   ).obs;
   Rx<TextEditingController> programNumberTextEditingControllerRx = TextEditingController().obs;
   Rx<TextEditingController> programTestTextEditingControllerRx = TextEditingController().obs;
@@ -37,28 +34,28 @@ class InputPagePresenterNew extends GetxController {
   Rx<InputPageDropdownState<IdAndValue<String>>> vendorInputPageDropdownStateRx = InputPageDropdownState<IdAndValue<String>>().obs;
   Rx<InputPageDropdownState<String>> statusTestingInputPageDropdownStateRx = InputPageDropdownState<String>().obs;
   Rx<InputPageDropdownState<String>> customerGroupInputPageDropdownState = InputPageDropdownState<String>(
-    choiceList: <String>[
-      "Customer",
-      /*"Disc Group"*/
-    ],
-    loadingState: 2
+      choiceList: <String>[
+        "Customer",
+        /*"Disc Group"*/
+      ],
+      loadingState: 2
   ).obs;
   Rx<InputPageDropdownState<IdAndValue<String>>> custNameHeaderValueDropdownStateRx = InputPageDropdownState<IdAndValue<String>>().obs;
   InputPageDropdownState<String> _itemGroupInputPageDropdownState = InputPageDropdownState<String>(
-    choiceList: <String>[
-      "Item",
-      "Disc Group"
-    ],
-    loadingState: 0
+      choiceList: <String>[
+        "Item",
+        "Disc Group"
+      ],
+      loadingState: 0
   );
   WrappedInputPageDropdownState<IdAndValue<String>> _warehouseInputPageDropdownState = WrappedInputPageDropdownState<IdAndValue<String>>(
-    choiceListWrapper: Wrapper(value: <IdAndValue<String>>[]),
-    loadingStateWrapper: Wrapper(value: 0),
-    selectedChoiceWrapper: Wrapper(value: null)
+      choiceListWrapper: Wrapper(value: <IdAndValue<String>>[]),
+      loadingStateWrapper: Wrapper(value: 0),
+      selectedChoiceWrapper: Wrapper(value: null)
   );
   InputPageDropdownState<IdAndValue<String>> _unitInputPageDropdownState = InputPageDropdownState<IdAndValue<String>>(
-    choiceList: <IdAndValue<String>>[],
-    loadingState: 0
+      choiceList: <IdAndValue<String>>[],
+      loadingState: 0
   );
   InputPageDropdownState<IdAndValue<String>> _multiplyInputPageDropdownState = InputPageDropdownState<IdAndValue<String>>(
     choiceList: <IdAndValue<String>>[
@@ -68,33 +65,33 @@ class InputPagePresenterNew extends GetxController {
     loadingState: 0,
   );
   InputPageDropdownState<String> _currencyInputPageDropdownState = InputPageDropdownState<String>(
-    choiceList: <String>[
-      "IDR",
-      "Dollar"
-    ],
-    loadingState: 0
+      choiceList: <String>[
+        "IDR",
+        "Dollar"
+      ],
+      loadingState: 0
   );
   InputPageDropdownState<IdAndValue<String>> _percentValueInputPageDropdownState = InputPageDropdownState<IdAndValue<String>>(
-    choiceList: <IdAndValue<String>>[
-      IdAndValue<String>(id: "1", value: "Percent"),
-      IdAndValue<String>(id: "2", value: "Value"),
+      choiceList: <IdAndValue<String>>[
+        IdAndValue<String>(id: "1", value: "Percent"),
+        IdAndValue<String>(id: "2", value: "Value"),
 
-      // "Percent",
-      // "Value"
-    ],
-    loadingState: 0
+        // "Percent",
+        // "Value"
+      ],
+      loadingState: 0
   );
 
   @override
   void onInit() {
     super.onInit();
     promotionTypeInputPageDropdownStateRx.valueFromLast((value) => value.copy(
-      choiceList: <IdAndValue<String>>[
-        IdAndValue<String>(id: "1", value: "Discount"),
-        IdAndValue<String>(id: "2", value: "Bonus"),
-        IdAndValue<String>(id: "9", value: "Discount & Bonus"),
-      ],
-      loadingState: 2
+        choiceList: <IdAndValue<String>>[
+          IdAndValue<String>(id: "1", value: "Discount"),
+          IdAndValue<String>(id: "2", value: "Bonus"),
+          IdAndValue<String>(id: "9", value: "Discount & Bonus"),
+        ],
+        loadingState: 2
     ));
     // IdAndValue<String>(id: "3", value: "Sample"),
     // IdAndValue<String>(id: "4", value: "Listing"),
@@ -103,11 +100,11 @@ class InputPagePresenterNew extends GetxController {
     // IdAndValue<String>(id: "7", value: "Gimmick"),
     // IdAndValue<String>(id: "8", value: "Trading Term"),
     statusTestingInputPageDropdownStateRx.valueFromLast((value) => value.copy(
-      choiceList: <String>[
-        "Live",
-        "Testing",
-      ],
-      loadingState: 2
+        choiceList: <String>[
+          "Live",
+          "Testing",
+        ],
+        loadingState: 2
     ));
     _multiplyInputPageDropdownState.selectedChoice = _multiplyInputPageDropdownState.choiceList?[1];
     _currencyInputPageDropdownState.selectedChoice = _currencyInputPageDropdownState.choiceList?[0];
@@ -153,12 +150,12 @@ class InputPagePresenterNew extends GetxController {
 
   void checkAddItemStatus() {
     promotionProgramInputStateRx.value.isAddItem =
-        // programNumberTextEditingControllerRx.value.text.isBlank == false
-      /*&&*/ programNameTextEditingControllerRx.value.text.isBlank == false
-      && promotionTypeInputPageDropdownStateRx.value.selectedChoice != null;
-      // && vendorInputPageDropdownStateRx.value.selectedChoice != null;
-      // && locationInputPageDropdownStateRx.value.selectedChoice != null
-      // && statusTestingInputPageDropdownStateRx.value.selectedChoice != null;
+    // programNumberTextEditingControllerRx.value.text.isBlank == false
+    /*&&*/ programNameTextEditingControllerRx.value.text.isBlank == false
+        && promotionTypeInputPageDropdownStateRx.value.selectedChoice != null;
+    // && vendorInputPageDropdownStateRx.value.selectedChoice != null;
+    // && locationInputPageDropdownStateRx.value.selectedChoice != null
+    // && statusTestingInputPageDropdownStateRx.value.selectedChoice != null;
     _updateState();
   }
 
@@ -183,7 +180,7 @@ class InputPagePresenterNew extends GetxController {
     var listData = jsonDecode(response.body);
     _warehouseInputPageDropdownState.loadingStateWrapper?.value = 2;
     _warehouseInputPageDropdownState.choiceListWrapper?.value = listData.map<IdAndValue<String>>(
-      (element) => IdAndValue<String>(id: element["INVENTLOCATIONID"].toString(), value: element["NAME"])
+            (element) => IdAndValue<String>(id: element["INVENTLOCATIONID"].toString(), value: element["NAME"])
     ).toList();
     print("loadWarehouse : ${_warehouseInputPageDropdownState.choiceListWrapper!.value?[0]}");
     _updateState();
@@ -196,7 +193,7 @@ class InputPagePresenterNew extends GetxController {
     unitPageDropdownState?.loadingState = 1;
     _updateState();
     var urlGetUnit = "http://119.18.157.236:8878/api/Unit?item=${selectProductPageDropdownState?.selectedChoice?.id}";
-    print("url getUnit : ${urlGetUnit}");
+    print("url getUnit : $urlGetUnit");
     final response = await get(Uri.parse(urlGetUnit));
     var listData = jsonDecode(response.body);
     unitPageDropdownState?.loadingState = 2;
@@ -214,9 +211,9 @@ class InputPagePresenterNew extends GetxController {
     InputPageDropdownState<IdAndValue<String>>? selectProductPageDropdownState = promotionProgramInputState?.selectProductPageDropdownState;
     String? selectedChoice = itemGroupInputPageDropdownState?.selectedChoice;
     final selectedItems = selectedDataPrincipal.map((index) => listDataPrincipal[index]).toList();
-    print("selectedItems ${selectedItems}");
+    print("selectedItems $selectedItems");
     String selectedItemsJson = jsonEncode(selectedItems); // Convert selectedItems to a JSON string
-    print("selectedItemsJson ${selectedItemsJson}");
+    print("selectedItemsJson $selectedItemsJson");
 
     if (selectedChoice == itemGroupInputPageDropdownState!.choiceList?[0]) {
       var urlGetProduct = "http://api-scs.prb.co.id/api/AllProduct?ID=rp004&idSales=Sample";
@@ -282,13 +279,13 @@ class InputPagePresenterNew extends GetxController {
   void _loadSupplyItem(int index) async {
     // xx
     final selectedItems = selectedDataPrincipal.map((index) => listDataPrincipal[index]).toList();
-    print("selectedItems ${selectedItems}");
+    print("selectedItems $selectedItems");
     String selectedItemsJson = jsonEncode(selectedItems);
     PromotionProgramInputState? promotionProgramInputState = promotionProgramInputStateRx.value.promotionProgramInputState?[index];
     InputPageDropdownState<IdAndValue<String>>? customerNameOrDiscountGroupInputPageDropdownState = promotionProgramInputState?.customerNameOrDiscountGroupInputPageDropdownState;
     InputPageDropdownState<IdAndValue<String>>? supplyItemPageDropdownState = promotionProgramInputState?.supplyItem;
     var urlGetSupplyItem = "http://119.18.157.236:8869/api/PrbItemTables";
-    print("url supply item : ${urlGetSupplyItem}");
+    print("url supply item : $urlGetSupplyItem");
     final response = await post(Uri.parse(urlGetSupplyItem),headers: {
       'Content-Type': 'application/json',
     }, body: selectedItemsJson);
@@ -318,7 +315,7 @@ class InputPagePresenterNew extends GetxController {
   }
 
   void changePromotionType(IdAndValue<String>? selectedChoice) {
-    print("promotionType :${selectedChoice}");
+    print("promotionType :$selectedChoice");
     print("promotionType :${selectedChoice?.id}");
     promotionTypeInputPageDropdownStateRx.value.selectedChoice = selectedChoice;
     checkAddItemStatus();
@@ -344,48 +341,48 @@ class InputPagePresenterNew extends GetxController {
   void addItem() {
     List<PromotionProgramInputState>? promotionProgramInputState = promotionProgramInputStateRx.value.promotionProgramInputState;
     promotionProgramInputState?.add(
-      PromotionProgramInputState(
-        customerGroupInputPageDropdownState: customerGroupInputPageDropdownState.value.copy(),
-        customerNameOrDiscountGroupInputPageDropdownState: InputPageDropdownState<IdAndValue<String>>(),
-        itemGroupInputPageDropdownState: _itemGroupInputPageDropdownState.copy(),
-        selectProductPageDropdownState: InputPageDropdownState<IdAndValue<String>>(
-          choiceList: [],
-          loadingState: 0
-        ),
-        wareHousePageDropdownState: _warehouseInputPageDropdownState.copy(
-          choiceListWrapper: _warehouseInputPageDropdownState.choiceListWrapper,
-          loadingStateWrapper: _warehouseInputPageDropdownState.loadingStateWrapper,
-          selectedChoiceWrapper: Wrapper<IdAndValue<String>>(value: null)
-        ),
-        qtyFrom: TextEditingController(),
-        qtyTo: TextEditingController(),
-        unitPageDropdownState: InputPageDropdownState<String>(
-          choiceList: [],
-          loadingState: 0
-        ),
-        multiplyInputPageDropdownState: _multiplyInputPageDropdownState.copy(),
-        currencyInputPageDropdownState: _currencyInputPageDropdownState.copy(),
-        percentValueInputPageDropdownState: _percentValueInputPageDropdownState.copy(),
-        fromDate: TextEditingController(),
-        toDate: TextEditingController(),
-        percent1: TextEditingController(),
-        percent2: TextEditingController(),
-        percent3: TextEditingController(),
-        percent4: TextEditingController(),
-        salesPrice: TextEditingController(),
-        priceToCustomer: TextEditingController(),
-        value1: TextEditingController(),
-        value2: TextEditingController(),
-        supplyItem: InputPageDropdownState<IdAndValue<String>>(
-          choiceList: [],
-          loadingState: 0
-        ),
-        qtyItem: TextEditingController(),
-        unitSupplyItem: InputPageDropdownState<String>(
-          choiceList: [],
-          loadingState: 0
-        ),
-      )
+        PromotionProgramInputState(
+          customerGroupInputPageDropdownState: customerGroupInputPageDropdownState.value.copy(),
+          customerNameOrDiscountGroupInputPageDropdownState: InputPageDropdownState<IdAndValue<String>>(),
+          itemGroupInputPageDropdownState: _itemGroupInputPageDropdownState.copy(),
+          selectProductPageDropdownState: InputPageDropdownState<IdAndValue<String>>(
+              choiceList: [],
+              loadingState: 0
+          ),
+          wareHousePageDropdownState: _warehouseInputPageDropdownState.copy(
+              choiceListWrapper: _warehouseInputPageDropdownState.choiceListWrapper,
+              loadingStateWrapper: _warehouseInputPageDropdownState.loadingStateWrapper,
+              selectedChoiceWrapper: Wrapper<IdAndValue<String>>(value: null)
+          ),
+          qtyFrom: TextEditingController(),
+          qtyTo: TextEditingController(),
+          unitPageDropdownState: InputPageDropdownState<String>(
+              choiceList: [],
+              loadingState: 0
+          ),
+          multiplyInputPageDropdownState: _multiplyInputPageDropdownState.copy(),
+          currencyInputPageDropdownState: _currencyInputPageDropdownState.copy(),
+          percentValueInputPageDropdownState: _percentValueInputPageDropdownState.copy(),
+          fromDate: TextEditingController(),
+          toDate: TextEditingController(),
+          percent1: TextEditingController(),
+          percent2: TextEditingController(),
+          percent3: TextEditingController(),
+          percent4: TextEditingController(),
+          salesPrice: TextEditingController(),
+          priceToCustomer: TextEditingController(),
+          value1: TextEditingController(),
+          value2: TextEditingController(),
+          supplyItem: InputPageDropdownState<IdAndValue<String>>(
+              choiceList: [],
+              loadingState: 0
+          ),
+          qtyItem: TextEditingController(),
+          unitSupplyItem: InputPageDropdownState<String>(
+              choiceList: [],
+              loadingState: 0
+          ),
+        )
     );
     _updateState();
   }
@@ -397,7 +394,7 @@ class InputPagePresenterNew extends GetxController {
 
   void changeCustomerGroup(int index, String selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .customerGroupInputPageDropdownState?.selectedChoice = selectedChoice;
+        .customerGroupInputPageDropdownState?.selectedChoice = selectedChoice;
     _updateState();
     // _loadCustomerOrGroup(index);
   }
@@ -456,7 +453,7 @@ class InputPagePresenterNew extends GetxController {
 
   void changeItemGroup(int index, String selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .itemGroupInputPageDropdownState?.selectedChoice = selectedChoice;
+        .itemGroupInputPageDropdownState?.selectedChoice = selectedChoice;
     _updateState();
     _loadProduct(index);
     // _loadProductByOrderSample(index);
@@ -464,44 +461,42 @@ class InputPagePresenterNew extends GetxController {
 
   void changeProduct(int index, IdAndValue<String> selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .selectProductPageDropdownState?.selectedChoice = selectedChoice;
+        .selectProductPageDropdownState?.selectedChoice = selectedChoice;
     promotionProgramInputStateRx.value.promotionProgramInputState?[index].qtyFrom?.text = "1";
     _loadUnit(index);
     _loadSupplyItem(index);
-    getSalesPriceValue(index);
     _updateState();
   }
 
   void changeWarehouse(int index, IdAndValue<String> selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .wareHousePageDropdownState?.selectedChoiceWrapper?.value = selectedChoice;
+        .wareHousePageDropdownState?.selectedChoiceWrapper?.value = selectedChoice;
     print("warehouse : ${selectedChoice.id}");
     _updateState();
   }
 
   void changeUnit(int index, String selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .unitPageDropdownState?.selectedChoice = selectedChoice;
-    getSalesPriceValue(index);
+        .unitPageDropdownState?.selectedChoice = selectedChoice;
     _updateState();
   }
 
   void changeMultiply(int index, IdAndValue<String> selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .multiplyInputPageDropdownState?.selectedChoice = selectedChoice;
+        .multiplyInputPageDropdownState?.selectedChoice = selectedChoice;
     _updateState();
   }
 
   void changeCurrency(int index, String selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .currencyInputPageDropdownState?.selectedChoice = selectedChoice;
+        .currencyInputPageDropdownState?.selectedChoice = selectedChoice;
     _updateState();
   }
 
   void changePercentValue(int index, IdAndValue<String> selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState![index]
-      .percentValueInputPageDropdownState?.selectedChoice = selectedChoice;
-    print("percent/value ${selectedChoice}");
+        .percentValueInputPageDropdownState?.selectedChoice = selectedChoice;
+    print("percent/value $selectedChoice");
     if(selectedChoice.value=="Value"){
       print("totot");
       promotionProgramInputStateRx.value.promotionProgramInputState?[index].percent1?.clear();
@@ -514,30 +509,10 @@ class InputPagePresenterNew extends GetxController {
       promotionProgramInputStateRx.value.promotionProgramInputState?[index].salesPrice?.clear();
       promotionProgramInputStateRx.value.promotionProgramInputState?[index].priceToCustomer?.clear();
     }
-    getSalesPriceValue(index);
     _updateState();
   }
 
-  void getSalesPriceValue(int index)async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? token = preferences.getString("token");
-    String? custId = custNameHeaderValueDropdownStateRx.value.selectedChoice?.id;
-    String? itemId = promotionProgramInputStateRx.value.promotionProgramInputState?[index].selectProductPageDropdownState?.selectedChoice?.id;
-    String? unit = promotionProgramInputStateRx.value.promotionProgramInputState?[index].unitPageDropdownState?.selectedChoice;
-    String? qtyFrom = promotionProgramInputStateRx.value.promotionProgramInputState?[index].qtyFrom?.text;
-    var url = "http://119.18.157.236:8869/api/AXPrice?cust=$custId&item=$itemId&uom=$unit&qty=$qtyFrom";
-    print("url getSalesPriceValue :$url");
-    final response = await get(Uri.parse(url));
-    if(response.statusCode==200){
-      print("isi getSalesPrice :${response.body}");
-      String value = response.body;
-      String valueConvert = MoneyFormatter(amount: double.parse(response.body)).output.withoutFractionDigits;
-      promotionProgramInputStateRx.value.promotionProgramInputState?[index].salesPrice?.text = valueConvert;
-    }else{
-      print("error getSalesPrice :${response.body}");
-      promotionProgramInputStateRx.value.promotionProgramInputState?[index].salesPrice?.text = "0";
-    }
-  }
+
 
   double _parseAndSanitizeNumber(String input, {String replaceChar = ".", String defaultValue = "0.0"}) {
     return double.parse(input.isEmpty ? defaultValue : input.replaceAll(replaceChar, "").replaceAll(",", ""));
@@ -548,11 +523,11 @@ class InputPagePresenterNew extends GetxController {
     var promotionProgramInputState = promotionProgramInputStateRx.value.promotionProgramInputState?[index];
 
     double salesPrice = _parseAndSanitizeNumber(promotionProgramInputState!.salesPrice!.text, replaceChar: ".");
-    print("salesPrice : ${salesPrice}");
+    print("salesPrice : $salesPrice");
     double value1 = _parseAndSanitizeNumber(promotionProgramInputState.value1!.text, replaceChar: ".");
-    print("value1 : ${value1}");
+    print("value1 : $value1");
     double value2 = _parseAndSanitizeNumber(promotionProgramInputState.value2!.text, replaceChar: ".");
-    print("value2 : ${value2}");
+    print("value2 : $value2");
 
     int percent1 = 0;
     int percent2 = 0;
@@ -578,14 +553,6 @@ class InputPagePresenterNew extends GetxController {
 
     double countPriceToCustomerValue = salesPrice - (value1 + value2);
     print("percent4After : $percent4");
-    dynamic totalDiscount = ((salesPrice * percent1/100) + (salesPrice * percent2/100) + (salesPrice * percent3/100) + (salesPrice * percent4/100));
-    print("totalDiscount : $totalDiscount");
-    double countPriceToCustomerPercent = salesPrice - totalDiscount;
-
-    print("countPriceToCustomerValue : $countPriceToCustomerValue");
-    print("countPriceToCustomerPercent : $countPriceToCustomerPercent");
-
-    promotionProgramInputState.priceToCustomer?.text = MoneyFormatter(amount: value1!=0.0?countPriceToCustomerValue:countPriceToCustomerPercent).output.withoutFractionDigits;
     update();
   }
 
@@ -605,14 +572,14 @@ class InputPagePresenterNew extends GetxController {
 
   void changeSupplyItem(int index, IdAndValue<String> selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .supplyItem?.selectedChoice = selectedChoice;
+        .supplyItem?.selectedChoice = selectedChoice;
     _updateState();
     _loadSupplyItemProductUnit(index);
   }
 
   void changeUnitSupplyItem(int index, String selectedChoice) {
     promotionProgramInputStateRx.value.promotionProgramInputState?[index]
-      .unitSupplyItem?.selectedChoice = selectedChoice;
+        .unitSupplyItem?.selectedChoice = selectedChoice;
     _updateState();
   }
 
@@ -671,12 +638,12 @@ class InputPagePresenterNew extends GetxController {
     print("token :$token");
     print("url :${'http://119.18.157.236:8869/api/activity?username=$username'}");
     final response = await post(
-      Uri.parse('http://119.18.157.236:8869/api/activity?username=$username'),
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': '$token',
-      },
-      body: isiBody
+        Uri.parse('http://119.18.157.236:8869/api/activity?username=$username'),
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': '$token',
+        },
+        body: isiBody
     );
     print("status submit : ${response.statusCode}");
     print("status body : ${response.body}");
@@ -687,7 +654,7 @@ class InputPagePresenterNew extends GetxController {
           tabController.initialIndex = 1;
           onTap.value = true;
           Get.offAll(
-              DashboardPage(),
+            DashboardPage(),
           );
           Get.to(DashboardPP(initialIndexs: 1,));
           update();
@@ -701,22 +668,22 @@ class InputPagePresenterNew extends GetxController {
                   child: CircularProgressIndicator(),
                 )
               ],
-        ),barrierDismissible: false);
+            ),barrierDismissible: false);
       } else {
         onTap.value = false;
         print("token : $token");
         Get.dialog(
             SimpleDialog(
-          title: Text("Error"),
-          children: [
-            Center(
-              child: Text("${response.statusCode}\n${response.body.replaceAll(r"\'", "'")}",style: TextStyle(color: Colors.red),textAlign: TextAlign.center),
-            ),
-            Center(
-              child: Icon(Icons.error),
-            ),
-          ],
-        ),barrierDismissible: false);
+              title: Text("Error"),
+              children: [
+                Center(
+                  child: Text("${response.statusCode}\n${response.body.replaceAll(r"\'", "'")}",style: TextStyle(color: Colors.red),textAlign: TextAlign.center),
+                ),
+                Center(
+                  child: Icon(Icons.error),
+                ),
+              ],
+            ),barrierDismissible: false);
         print(response.body);
       }
     }
@@ -744,9 +711,9 @@ class InputPagePresenterNew extends GetxController {
       "Lines": promotionProgramInputStateRx.value.promotionProgramInputState?.asMap().entries.map<Map<String, dynamic>>((entry) {
         int index = entry.key;
         var element = entry.value;
-        print("inndex :${index}");
-        print("ellement :${element}");
-        print("idLines :${idLines}");
+        print("inndex :$index");
+        print("ellement :$element");
+        print("idLines :$idLines");
         return <String, dynamic>{
           //baru
           "Id": idLines[index], // use the index to get the corresponding id from idLines

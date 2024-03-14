@@ -3,12 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_scs/mobile_sms/lib/models/User.dart';
-import 'package:flutter_scs/mobile_sms/lib/providers/LoginProvider.dart';
 import 'package:flutter_scs/models/ApiConstant.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hive/hive.dart';
 import '../view/MainMenuView.dart';
@@ -89,8 +87,8 @@ class Employee {
       );
       var jsonObject = json.decode(apiResult.body);
       employee = Employee.fromLoginJson(jsonObject);
-      print("url login : ${url}");
-      print("body login : ${bodyLogin}");
+      print("url login : $url");
+      print("body login : $bodyLogin");
       print("status code login : ${apiResult.statusCode}");
       if (apiResult.statusCode == 200) {
         Box _userBox;

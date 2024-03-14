@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/ConditionNull.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/TextResultCard.dart';
@@ -22,8 +20,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/ApiConstant.dart';
 import 'HistoryNomorPP.dart';
-import 'HistorySO.dart';
-import 'HistorySOAll.dart';
 
 class HistoryLinesAll extends StatefulWidget {
   @override
@@ -112,110 +108,100 @@ class _HistoryLinesAllState extends State<HistoryLinesAll> {
                 onRefresh: listHistorySO,
                 child: FutureBuilder(
                   future: Promosi.getListLines(
-                      widget.numberPP!, code, _user!.token!, _user!.username!),
+                      widget.numberPP!, code, _user.token!, _user.username),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     _listHistorySO == null
                         ? _listHistorySO = snapshot.data
                         : _listHistorySO = _listHistorySO;
-                    if (_listHistorySO == null) {
-                      return Container(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            semanticsLabel: "Loading...",
-                          ),
+                    if (_listHistorySO[0].codeError == 404 ||
+                        _listHistorySO[0].codeError == 303) {
+                      return ConditionNull(
+                          message: _listHistorySO[0].message);
+                    } else {
+                      return startApp==false?Center(child: CircularProgressIndicator()):SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  TextResultCard(
+                                    context: context,
+                                    title: "No. PP",
+                                    value: RegExp(r"\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}").hasMatch(dataHeader[0]["nomorPP"])==true?dataHeader[0]["nomorPP"].replaceRange(34, null, ""):dataHeader[0]["nomorPP"],
+                                  ),
+                                  TextResultCard(
+                                    context: context,
+                                    title: "PP. Type",
+                                    value: "${dataHeader[0]["type"]}",
+                                  ),
+                                  TextResultCard(
+                                    context: context,
+                                    title: "Customer",
+                                    value: "${dataHeader[0]["customer"]}",
+                                  ),
+                                  TextResultCard(
+                                    context: context,
+                                    title: "Note",
+                                    value: "${dataHeader[0]["note"]}",
+                                  ),
+                                  Container(
+                                      width: ScreenUtil().setHeight(MediaQuery.of(context).size.width),
+                                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                      child: Consumer<LinesProvider>(
+                                          builder: (context, linesProv, _) => TextFormField(
+                                            readOnly: true,
+                                            initialValue: dataHeader[0]["fromDate"].split(" ")[0].toString(),
+                                            keyboardType: TextInputType.datetime,
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                filled: true,
+                                                labelText: 'From Date',
+                                                hintStyle: TextStyle(
+                                                    color: Theme.of(context).primaryColor,
+                                                    fontSize: 15),
+                                                errorStyle: TextStyle(
+                                                    color: Theme.of(context).colorScheme.error,
+                                                    fontSize: 15)),
+                                          ))),
+                                  Container(
+                                      width:
+                                      ScreenUtil().setHeight(MediaQuery.of(context).size.width),
+                                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                      child: Consumer<LinesProvider>(
+                                          builder: (context, linesProv, _) => TextFormField(
+                                            readOnly: true,
+                                            initialValue: dataHeader[0]["toDate"].split(" ")[0],
+                                            keyboardType: TextInputType.datetime,
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                filled: true,
+                                                labelText: 'To Date',
+                                                hintStyle: TextStyle(
+                                                    color: Theme.of(context).primaryColor,
+                                                    fontSize: 15),
+                                                errorStyle: TextStyle(
+                                                    color: Theme.of(context).colorScheme.error,
+                                                    fontSize: 15)),
+                                          ))),
+                                ],
+                              ),
+                            ),
+                            ListView.builder(
+                              itemCount: _listHistorySO.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                print("notoling ${jsonEncode(_listHistorySO[0])}");
+                                return CardLinesAdapter(
+                                    widget.numberPP!, _listHistorySO[index], index);
+                              },
+                            ),
+                          ],
                         ),
                       );
-                    } else {
-                      if (_listHistorySO[0].codeError == 404 ||
-                          _listHistorySO[0].codeError == 303) {
-                        return ConditionNull(
-                            message: _listHistorySO[0].message);
-                      } else {
-                        return startApp==false?Center(child: CircularProgressIndicator()):SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    TextResultCard(
-                                      context: context,
-                                      title: "No. PP",
-                                      value: RegExp(r"\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}").hasMatch(dataHeader[0]["nomorPP"])==true?dataHeader[0]["nomorPP"].replaceRange(34, null, ""):dataHeader[0]["nomorPP"],
-                                    ),
-                                    TextResultCard(
-                                      context: context,
-                                      title: "PP. Type",
-                                      value: "${dataHeader[0]["type"]}",
-                                    ),
-                                    TextResultCard(
-                                      context: context,
-                                      title: "Customer",
-                                      value: "${dataHeader[0]["customer"]}",
-                                    ),
-                                    TextResultCard(
-                                      context: context,
-                                      title: "Note",
-                                      value: "${dataHeader[0]["note"]}",
-                                    ),
-                                    Container(
-                                        width: ScreenUtil().setHeight(MediaQuery.of(context).size.width),
-                                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                        child: Consumer<LinesProvider>(
-                                            builder: (context, linesProv, _) => TextFormField(
-                                              readOnly: true,
-                                              initialValue: dataHeader[0]["fromDate"].split(" ")[0].toString(),
-                                              keyboardType: TextInputType.datetime,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  filled: true,
-                                                  labelText: 'From Date',
-                                                  hintStyle: TextStyle(
-                                                      color: Theme.of(context).primaryColor,
-                                                      fontSize: 15),
-                                                  errorStyle: TextStyle(
-                                                      color: Theme.of(context).errorColor,
-                                                      fontSize: 15)),
-                                            ))),
-                                    Container(
-                                        width:
-                                        ScreenUtil().setHeight(MediaQuery.of(context).size.width),
-                                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                        child: Consumer<LinesProvider>(
-                                            builder: (context, linesProv, _) => TextFormField(
-                                              readOnly: true,
-                                              initialValue: dataHeader[0]["toDate"].split(" ")[0],
-                                              keyboardType: TextInputType.datetime,
-                                              decoration: InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  filled: true,
-                                                  labelText: 'To Date',
-                                                  hintStyle: TextStyle(
-                                                      color: Theme.of(context).primaryColor,
-                                                      fontSize: 15),
-                                                  errorStyle: TextStyle(
-                                                      color: Theme.of(context).errorColor,
-                                                      fontSize: 15)),
-                                            ))),
-                                  ],
-                                ),
-                              ),
-                              ListView.builder(
-                                itemCount: _listHistorySO?.length,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemBuilder: (BuildContext context, int index) {
-                                  print("notoling ${jsonEncode(_listHistorySO[0])}");
-                                  return CardLinesAdapter(
-                                      widget.numberPP!, _listHistorySO[index], index);
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      }
                     }
-                  },
+                                    },
                 ),
               ),
             ),
@@ -246,7 +232,7 @@ class _HistoryLinesAllState extends State<HistoryLinesAll> {
     print("pp type :${promosi.disc1}");
     String? str = promosi.nomorPP;
     bool hasDateTime = RegExp(r"\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}").hasMatch(str!);
-    print("hasDateTime : ${hasDateTime}"); // Output: true
+    print("hasDateTime : $hasDateTime"); // Output: true
     return Container(
         margin: EdgeInsets.all(ScreenUtil().setWidth(10)),
         padding: EdgeInsets.all(ScreenUtil().setWidth(5)),

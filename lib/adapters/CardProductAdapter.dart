@@ -27,15 +27,14 @@ class CardProductAdapter extends StatelessWidget {
           InkWell(
             onTap: () {
               cartValue.setCartProduct(models);
-              if (cartValue.getMessage != null)
-                Fluttertoast.showToast(
-                    msg: cartValue.getMessage,
-                    toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 5,
-                    backgroundColor: Colors.redAccent.shade700,
-                    textColor: Colors.yellow,
-                    fontSize: ScreenUtil().setSp(16));
+              Fluttertoast.showToast(
+                  msg: cartValue.getMessage,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.redAccent.shade700,
+                  textColor: Colors.yellow,
+                  fontSize: ScreenUtil().setSp(16));
             },
             child: Card(
               elevation: 4,
@@ -97,15 +96,14 @@ class CardProductAdapter extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 cartValue.setCartProduct(models);
-                if (cartValue.getMessage != null)
-                  Fluttertoast.showToast(
-                      msg: cartValue.getMessage,
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.CENTER,
-                      timeInSecForIosWeb: 5,
-                      backgroundColor: Colors.redAccent.shade700,
-                      textColor: Colors.yellow,
-                      fontSize: ScreenUtil().setSp(16));
+                Fluttertoast.showToast(
+                    msg: cartValue.getMessage,
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.CENTER,
+                    timeInSecForIosWeb: 5,
+                    backgroundColor: Colors.redAccent.shade700,
+                    textColor: Colors.yellow,
+                    fontSize: ScreenUtil().setSp(16));
               },
               child: cartValue.getCarts
                       .where((element) => element.idProduct == models.idProduct)

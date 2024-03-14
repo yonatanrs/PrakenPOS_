@@ -67,12 +67,10 @@ class UrlAPI {
 
     if (type == 0) {
       //link live
-      domain = "http://api-scs.prb.co.id/";
-      // domain = "http://hrms.prb.co.id:8877/";
+      domain = "http://hrms.prb.co.id:8877/";
     } else if (type == 1) {
       //link dev
-      domain = "http://api-scs.prb.co.id/";
-      // domain = "http://hrms.prb.co.id:8877/";
+      domain = "http://hrms.prb.co.id:8877/";
     } else {
       domain = url;
     }

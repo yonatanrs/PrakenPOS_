@@ -6,7 +6,6 @@ import 'package:flutter_scs/assets/uistate/widget_state_loading.dart';
 import 'package:flutter_scs/models/Reconsile.dart';
 import 'package:flutter_scs/view/MainMenuView.dart';
 import 'package:flutter_scs/view/reconsile-exhibition/reconsile_exhibition_page.dart';
-import 'package:flutter_scs/view/stock/RecapStockView.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

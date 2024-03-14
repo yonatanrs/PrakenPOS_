@@ -5,7 +5,6 @@ import 'package:flutter_scs/assets/style.dart';
 import 'package:flutter_scs/models/ApiConstant.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_scs/view/transaction/MainTransactionView.dart';
-import 'package:get_storage/get_storage.dart';
 
 class PaymentView extends StatefulWidget {
   @override

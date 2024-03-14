@@ -957,7 +957,7 @@ class _HistoryLinesAllEditState extends State<HistoryLinesAllEdit> {
 
   @override
   Widget build(BuildContext context) {
-    log("totlah ${_listHistorySOEncode}");
+    log("totlah $_listHistorySOEncode");
     return WillPopScope(
       onWillPop: onBackPressLines,
       child: Scaffold(

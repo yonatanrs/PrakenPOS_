@@ -11,7 +11,6 @@ import '../assets/widgets/Debounce.dart';
 import '../assets/widgets/TextResultCard.dart';
 import '../models/Promosi.dart';
 import '../models/User.dart';
-import 'HistoryLines.dart';
 
 class HistoryApproved extends StatefulWidget {
   const HistoryApproved({Key? key}) : super(key: key);
@@ -95,7 +94,7 @@ class _HistoryApprovedState extends State<HistoryApproved> {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
                       return HistoryLinesApproved(
-                        numberPP: promosi?.namePP,
+                        numberPP: promosi.namePP,
                         idEmp: _user?.id,
                       );
                     }));

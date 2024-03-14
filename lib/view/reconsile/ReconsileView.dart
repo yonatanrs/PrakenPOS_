@@ -6,7 +6,6 @@ import 'package:flutter_scs/assets/uistate/widget_state_loading.dart';
 import 'package:flutter_scs/models/Reconsile.dart';
 import 'package:flutter_scs/view/MainMenuView.dart';
 import 'package:flutter_scs/view/stock/RecapStockView.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReconsileView extends StatefulWidget {
@@ -83,7 +82,7 @@ class _ReconsileViewState extends State<ReconsileView> {
                     );
                   }
                   return ListView.builder(
-                      itemCount: _listReconsile?.length,
+                      itemCount: _listReconsile.length,
                       itemBuilder: (BuildContext context, int index) =>
                           CardAllReconsileAdapter(
                             models: _listReconsile[index],

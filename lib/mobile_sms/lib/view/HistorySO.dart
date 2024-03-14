@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/ConditionNull.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/SalesOrderAdapter.dart';
 import 'package:flutter_scs/mobile_sms/lib/models/Promosi.dart';

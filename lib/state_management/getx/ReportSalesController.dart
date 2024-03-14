@@ -7,12 +7,8 @@ class ReportSalesController extends GetxController with StateMixin<Report> {
     change(null, status: RxStatus.loading());
     try {
       var reportSales = await Report.getReportSalesperMonth(idSales);
-      if (reportSales == null) {
-        change(null, status: RxStatus.empty());
-      } else {
-        change(reportSales, status: RxStatus.success());
-      }
-    } on DioError catch (e) {
+      change(reportSales, status: RxStatus.success());
+        } on DioError catch (e) {
       if (e.type == DioErrorType.connectTimeout ||
           e.type == DioErrorType.receiveTimeout) {
         change(null, status: RxStatus.error("No Connection"));

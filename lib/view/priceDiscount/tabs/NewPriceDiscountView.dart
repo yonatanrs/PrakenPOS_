@@ -83,7 +83,7 @@ class _NewPriceDiscountViewState extends State<NewPriceDiscountView> {
                   if (snapshot.hasData && !snapshot.hasError) {
                     listPriceDiscReal = snapshot.data as List<PriceDiscount>;
                     _listPriceDisc = listPriceDiscReal;
-                    if (_listPriceDisc?.length == 0) {
+                    if (_listPriceDisc.length == 0) {
                       return Center(
                         child: Column(
                           children: <Widget>[
@@ -95,10 +95,10 @@ class _NewPriceDiscountViewState extends State<NewPriceDiscountView> {
                       );
                     }
                     return ListView.builder(
-                      itemCount: _listPriceDisc?.length,
+                      itemCount: _listPriceDisc.length,
                       itemBuilder: (BuildContext context, int index) =>
                           CardAllDiscountAdapter(
-                              models: _listPriceDisc![index]),
+                              models: _listPriceDisc[index]),
                     );
                   } else {
                     print(snapshot.error.toString());

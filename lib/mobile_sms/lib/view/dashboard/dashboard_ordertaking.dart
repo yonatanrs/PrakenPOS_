@@ -3,8 +3,6 @@ import 'package:flutter_scs/mobile_sms/lib/view/transaction/transaction_history_
 import 'package:flutter_scs/mobile_sms/lib/view/transaction/transaction_page.dart';
 import 'package:get/get.dart';
 import '../../../../assets/style.dart';
-import '../HistoryNomorPP_All.dart';
-import '../input-page/input-page-new.dart';
 
 class DashboardOrderTaking extends StatefulWidget {
   int? initialIndexs;
@@ -23,7 +21,7 @@ class _DashboardOrderTakingState extends State<DashboardOrderTaking> {
     }else if(widget.initialIndexs==1){
       tabController.initialIndex = 1;
       Future.delayed(Duration(seconds: 1),(){
-        tabController.controller.animateTo(tabController.initialIndex!);
+        tabController.controller.animateTo(tabController.initialIndex);
       });
     }
   }
@@ -49,7 +47,7 @@ class _DashboardOrderTakingState extends State<DashboardOrderTaking> {
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: DefaultTabController(
-            initialIndex: tabController.initialIndex!,
+            initialIndex: tabController.initialIndex,
             length: 2,
             child: Column(
               mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,3 @@
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,12 +5,9 @@ import 'package:flutter_scs/assets/style.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/global.dart';
 import 'package:flutter_scs/mobile_sms/lib/view/transaction/transaction_presenter.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:money_input_formatter/money_input_formatter.dart';
 import 'package:search_choices/search_choices.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:collection';
 import '../../models/input-page-wrapper.dart';
 import '../../models/promotion-program-input-state.dart';
 
@@ -51,7 +47,7 @@ class _TransactionPageState extends State<TransactionPage> {
                   IconButton(
                       onPressed: (){
                         // Future.delayed(Duration(milliseconds: ),(){
-                          inputPagePresenter.removeItem(index);
+                        inputPagePresenter.removeItem(index);
                         // });
                         // Future.delayed(Duration(milliseconds: 500),(){
                         //   setState(() {
@@ -138,38 +134,38 @@ class _TransactionPageState extends State<TransactionPage> {
                       fontFamily: 'AvenirLight'),
                   onTap: (){
                     Get.defaultDialog(
-                        title: "",
-                        barrierDismissible: false,
-                        onWillPop: () {
-                          return Future.value(false);
-                        },
-                        content: TextFormField(
-                          controller: promotionProgramInputState.qtyTransaction,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          ],
-                          decoration: InputDecoration(
-                              labelText: "Set Qty : ",
-                              suffixText: ""
-                          ),
+                      title: "",
+                      barrierDismissible: false,
+                      onWillPop: () {
+                        return Future.value(false);
+                      },
+                      content: TextFormField(
+                        controller: promotionProgramInputState.qtyTransaction,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                        ],
+                        decoration: InputDecoration(
+                            labelText: "Set Qty : ",
+                            suffixText: ""
                         ),
-                        confirm: TextButton(
-                            style: TextButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              backgroundColor: colorSecondary,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100)),
-                            ),
-                            child: Text(
-                              "Ok",
-                              style:
-                              TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              inputPagePresenter.changeQty(index, promotionProgramInputState.qtyTransaction!.text);
-                              Get.back();
-                            }),
+                      ),
+                      confirm: TextButton(
+                          style: TextButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            backgroundColor: colorSecondary,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100)),
+                          ),
+                          child: Text(
+                            "Ok",
+                            style:
+                            TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            inputPagePresenter.changeQty(index, promotionProgramInputState.qtyTransaction!.text);
+                            Get.back();
+                          }),
                     );
                   },
                 ),
@@ -208,121 +204,121 @@ class _TransactionPageState extends State<TransactionPage> {
                   // },
                   onTap: (){
                     Get.defaultDialog(
-                        title: "",
-                        barrierDismissible: false,
-                        onWillPop: () {
-                          return Future.value(false);
-                        },
-                        content: TextFormField(
-                          controller: promotionProgramInputState.priceTransaction,
-                          keyboardType: TextInputType.number,
-                          // onChanged: (value){
-                          //   textFormField.inputFormatters.removeWhere((formatter) => formatter is MoneyInputFormatter);
-                          // },
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                            MoneyInputFormatter(thousandSeparator: ".", decimalSeparator: ",")
-                          ],
-                          decoration: InputDecoration(
-                              labelText: "Set Price : ",
-                              suffixText: ""
-                          ),
+                      title: "",
+                      barrierDismissible: false,
+                      onWillPop: () {
+                        return Future.value(false);
+                      },
+                      content: TextFormField(
+                        controller: promotionProgramInputState.priceTransaction,
+                        keyboardType: TextInputType.number,
+                        // onChanged: (value){
+                        //   textFormField.inputFormatters.removeWhere((formatter) => formatter is MoneyInputFormatter);
+                        // },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          MoneyInputFormatter(thousandSeparator: ".", decimalSeparator: ",")
+                        ],
+                        decoration: InputDecoration(
+                            labelText: "Set Price : ",
+                            suffixText: ""
                         ),
-                        confirm: TextButton(
-                            style: TextButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              backgroundColor: colorSecondary,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100)),
-                            ),
-                            child: Text(
-                              "Ok",
-                              style:
-                              TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              // Future.delayed(Duration(milliseconds: 500),(){
-                                inputPagePresenter.changePrice(index, promotionProgramInputState.priceTransaction!.text);
-                              // });
-                              // Future.delayed(Duration(milliseconds: 600),(){
-                              //   setState(() {
-                              //
-                              //   });
-                              // });
-                              Get.back();
-                            }),
+                      ),
+                      confirm: TextButton(
+                          style: TextButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            backgroundColor: colorSecondary,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100)),
+                          ),
+                          child: Text(
+                            "Ok",
+                            style:
+                            TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            // Future.delayed(Duration(milliseconds: 500),(){
+                            inputPagePresenter.changePrice(index, promotionProgramInputState.priceTransaction!.text);
+                            // });
+                            // Future.delayed(Duration(milliseconds: 600),(){
+                            //   setState(() {
+                            //
+                            //   });
+                            // });
+                            Get.back();
+                          }),
                     );
                   },
                   //  controller: _passwordController,
                 ),
               ),
-              Container(
-                width: Get.width,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: promotionProgramInputState.discTransaction,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    labelText: 'Disc',
-                    suffixText: "(%)",
-                    labelStyle: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 12,
-                        fontFamily: 'AvenirLight'
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colors.purple),
-                    ),
-                    enabledBorder: new UnderlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.grey, width: 1.0)),
-                  ),
-                  style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 17,
-                      fontFamily: 'AvenirLight'),
-                  // onChanged: (value){
-                  //   inputPagePresenter.changeDisc(index, promotionProgramInputState.discTransaction.text);
-                  // },
-                  onTap: (){
-                    Get.defaultDialog(
-                        title: "",
-                        barrierDismissible: false,
-                        onWillPop: () {
-                          return Future.value(false);
-                        },
-                        content: TextFormField(
-                          controller: promotionProgramInputState.discTransaction,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          ],
-                          decoration: InputDecoration(
-                              labelText: "Set Discount : ",
-                              suffixText: "%"
-                          ),
-                        ),
-                        confirm: TextButton(
-                            style: TextButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              backgroundColor: colorSecondary,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100)),
-                            ),
-                            child: Text(
-                              "Ok",
-                              style:
-                              TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              inputPagePresenter.changeDisc(index, promotionProgramInputState.discTransaction!.text);
-                              Get.back();
-                            }),
-                    );
-                  },
-                ),
-              ),
+              // Container(
+              //   width: Get.width,
+              //   child: TextFormField(
+              //     keyboardType: TextInputType.number,
+              //     controller: promotionProgramInputState.discTransaction,
+              //     readOnly: true,
+              //     decoration: InputDecoration(
+              //       labelText: 'Disc',
+              //       suffixText: "(%)",
+              //       labelStyle: TextStyle(
+              //           color: Colors.black87,
+              //           fontSize: 12,
+              //           fontFamily: 'AvenirLight'
+              //       ),
+              //       focusedBorder: UnderlineInputBorder(
+              //         borderSide:
+              //         BorderSide(color: Colors.purple),
+              //       ),
+              //       enabledBorder: new UnderlineInputBorder(
+              //           borderSide: BorderSide(
+              //               color: Colors.grey, width: 1.0)),
+              //     ),
+              //     style: TextStyle(
+              //         color: Colors.black87,
+              //         fontSize: 17,
+              //         fontFamily: 'AvenirLight'),
+              //     // onChanged: (value){
+              //     //   inputPagePresenter.changeDisc(index, promotionProgramInputState.discTransaction.text);
+              //     // },
+              //     onTap: (){
+              //       Get.defaultDialog(
+              //           title: "",
+              //           barrierDismissible: false,
+              //           onWillPop: () {
+              //             return Future.value(false);
+              //           },
+              //           content: TextFormField(
+              //             controller: promotionProgramInputState.discTransaction,
+              //             keyboardType: TextInputType.number,
+              //             inputFormatters: <TextInputFormatter>[
+              //               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+              //             ],
+              //             decoration: InputDecoration(
+              //                 labelText: "Set Discount : ",
+              //                 suffixText: "%"
+              //             ),
+              //           ),
+              //           confirm: TextButton(
+              //               style: TextButton.styleFrom(
+              //                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              //                 backgroundColor: colorSecondary,
+              //                 shape: RoundedRectangleBorder(
+              //                     borderRadius: BorderRadius.circular(100)),
+              //               ),
+              //               child: Text(
+              //                 "Ok",
+              //                 style:
+              //                 TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+              //               ),
+              //               onPressed: () {
+              //                 inputPagePresenter.changeDisc(index, promotionProgramInputState.discTransaction!.text);
+              //                 Get.back();
+              //               }),
+              //       );
+              //     },
+              //   ),
+              // ),
               SizedBox(height: 8,),
               Text("Total",style: TextStyle(fontSize: 11),),
               SizedBox(height: 3,),
@@ -362,7 +358,7 @@ class _TransactionPageState extends State<TransactionPage> {
                           Text("Create"),
                           SizedBox(height: 5),
                           Text(
-                            "Setup a trade agreement",
+                            "New Order Taking",
                             style: TextStyle(fontSize: 10, color: Colors.black54),
                           ),
                           SizedBox(
@@ -439,7 +435,7 @@ class _TransactionPageState extends State<TransactionPage> {
                                 List<String?> price = promotionProgramInputState.map((e) => e.priceTransaction?.text).toList();
                                 print(disc);
                                 print("originalPrice ${inputPagePresenter.originalPrice.toString()}");
-                                print("Editing price :${price}");
+                                print("Editing price :$price");
                                 bool isEqual = listEquals(inputPagePresenter.originalPrice, price);
                                 if(isEqual){
                                   print("x");

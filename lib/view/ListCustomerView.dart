@@ -205,7 +205,7 @@ class _ListCustomerViewState extends State<ListCustomerView> {
                                 Expanded(
                                   flex: 1,
                                   child: Text(
-                                    state!.customer!.address!,
+                                    state.customer!.address!,
                                     textAlign: TextAlign.right,
                                   ),
                                 ),
@@ -246,45 +246,20 @@ class _ListCustomerViewState extends State<ListCustomerView> {
         ),
         onPressed: () async{
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          if (_customer == null && nameCust != null) {
-            _customer = new Customer();
-            var convert = _customer.codeCust;
-            codeName = convert!;
-            print("ini codeName: $codeName");
-            // _customer.codeCust = idSales;
-            //   prefs.setString("codeName", "${_customer.codeCust}");
-            _customer.nameCust = nameCust;
-            _customer.contact = contact;
-            _customer.address = address;
-            Customer.insertNewCustomer(_customer).then((value) {
-              if (value == "1") {
-                _showAlertDialog(_customer, 0);
-              } else {
-
-                Fluttertoast.showToast(
-                    msg: 'Gagal Input Pelanggan Baru',
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.CENTER,
-                    timeInSecForIosWeb: 5,
-                    backgroundColor: colorError,
-                    textColor: colorFontError,
-                    fontSize: ScreenUtil().setSp(16));
-              }
-            });
-          } else if (_customer == null && nameCust == null) {
-            Fluttertoast.showToast(
-                msg:
-                    'Tolong pilih pelanggan atau isi lengkap data pelanggan baru.',
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 5,
-                backgroundColor: colorError,
-                textColor: colorFontError,
-                fontSize: ScreenUtil().setSp(16));
-          } else {
-            print("one piece");
-            _showAlertDialog(_customer, 1);
-          }
+          if (_customer == null && nameCust == null) {
+          Fluttertoast.showToast(
+              msg:
+                  'Tolong pilih pelanggan atau isi lengkap data pelanggan baru.',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 5,
+              backgroundColor: colorError,
+              textColor: colorFontError,
+              fontSize: ScreenUtil().setSp(16));
+        } else {
+          print("one piece");
+          _showAlertDialog(_customer, 1);
+        }
         },
         child: Text(
           "SELANJUTNYA",
@@ -330,8 +305,6 @@ class _ListCustomerViewState extends State<ListCustomerView> {
         await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return FormNewCustomerView();
     }));
-    if (status != null) {
-      _initialData();
+    _initialData();
     }
-  }
 }

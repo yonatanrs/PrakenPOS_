@@ -13,7 +13,7 @@ class ConditionNull extends StatelessWidget {
           message??"",
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).errorColor,
+              color: Theme.of(context).colorScheme.error,
               fontSize: ScreenUtil().setSp(25)),
         ),
       ),

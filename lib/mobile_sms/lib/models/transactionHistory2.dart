@@ -1,46 +1,20 @@
 class TransactionHistory2 {
-  List<TransactionLines>? transactionLines;
-  int? SalesId;
-  String? Customer;
-  String? Date;
-  String? transactionId;
-  String? customerId;
+  final String? SalesId;
+  final String? Customer;
+  final String? Date;
+  final String? CustReff;
+  final String? Status; // Make sure this field exists
 
-  TransactionHistory2(
-      {this.transactionLines,
-        this.SalesId,
-        this.Customer,
-        this.Date,
-        this.transactionId,
-        this.customerId});
+  TransactionHistory2({this.SalesId, this.Customer, this.Date, this.CustReff, this.Status});
 
-  TransactionHistory2.fromJson(Map<String, dynamic> json) {
-    if (json['transactionLines'] != null) {
-      transactionLines = <TransactionLines>[];
-      json['transactionLines'].forEach((v) {
-        transactionLines?.add(new TransactionLines.fromJson(v));
-      });
-    }
-    SalesId = json['SalesId'] != null ? int.tryParse(json['SalesId'].toString()) : null;
-    Customer = json['Customer'];
-    Date = json['Date'];
-    transactionId = json['transactionId'];
-    customerId = json['customerId'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    final transactionLines = this.transactionLines;
-    if (transactionLines != null) {
-      data['transactionLines'] =
-          transactionLines.map((v) => v.toJson()).toList();
-    }
-    data['SalesId'] = this.SalesId;
-    data['Customer'] = this.Customer;
-    data['Date'] = this.Date;
-    data['transactionId'] = this.transactionId;
-    data['customerId'] = this.customerId;
-    return data;
+  factory TransactionHistory2.fromJson(Map<String, dynamic> json) {
+    return TransactionHistory2(
+      SalesId: json['SalesId'] as String?,
+      Customer: json['Customer'] as String?,
+      Date: json['Date'] as String?,
+      CustReff: json['CustReff'] as String?,
+      Status: json['Status'] as String?, // Make sure this line is correct
+    );
   }
 }
 

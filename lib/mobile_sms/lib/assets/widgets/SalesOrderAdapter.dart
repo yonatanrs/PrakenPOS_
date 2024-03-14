@@ -52,7 +52,7 @@ class SalesOrderAdapter extends StatelessWidget {
           TextResultCard(
             context: context,
             title: "Total",
-            value: models?.totalAmount??"",
+            value: models.totalAmount??"",
           ),
         ],
       ),

@@ -1,23 +1,17 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:money_formatter/money_formatter.dart';
 import 'package:search_choices/search_choices.dart';
-import 'package:collection/collection.dart';
 import '../../models/PostTransactionModel.dart';
 import '../../models/PostTransactionModelDummy.dart';
 import '../MainMenuView.dart';
 import 'customer-wrapper.dart';
-import 'exhibition-and-customer-wrapper.dart';
 import 'exhibition-presenter.dart';
 import 'exhibition-product-input-state.dart';
 import 'exhibition-product-model.dart';
-import 'exhibition-wrapper.dart';
-import 'qty_text_input_formatter.dart';
 
 class ExhibitionPage extends StatefulWidget {
   int? initialindex;
@@ -141,9 +135,7 @@ class _ExhibitionPageState extends State<ExhibitionPage> {
               Spacer(),
               TextButton(
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
-                  backgroundColor: Colors.lightBlue,
-                  onSurface: Colors.grey,
+                  foregroundColor: Colors.white, backgroundColor: Colors.lightBlue, disabledForegroundColor: Colors.grey.withOpacity(0.38),
                 ),
                 onPressed: (){
                   setState(() {
@@ -911,7 +903,7 @@ class _ExhibitionPageState extends State<ExhibitionPage> {
                         for (int i = 0; i < exhibitionProgramInputState.length; i++) {
                           productFormWidget.add(formProduct(i, exhibitionProgramInputState[i]));
                         }
-                        print("productFormWidget :${productFormWidget}");
+                        print("productFormWidget :$productFormWidget");
                         return DraggableScrollableSheet(
                             snap: true,
                             initialChildSize: 1,
@@ -1031,7 +1023,7 @@ class _ExhibitionPageState extends State<ExhibitionPage> {
                                           Get.bottomSheet(
                                             // Container(),
                                               ListView.builder(
-                                                  itemCount: exhibitiionPresenter.dataListDetailExhibition?.length??0,
+                                                  itemCount: exhibitiionPresenter.dataListDetailExhibition.length??0,
                                                   itemBuilder: (context, index) {
                                                     return Column(
                                                       children: [
@@ -1041,9 +1033,7 @@ class _ExhibitionPageState extends State<ExhibitionPage> {
                                                             Spacer(),
                                                             TextButton(
                                                               style: TextButton.styleFrom(
-                                                                primary: Colors.white,
-                                                                backgroundColor: Colors.lightBlue,
-                                                                onSurface: Colors.grey,
+                                                                foregroundColor: Colors.white, backgroundColor: Colors.lightBlue, disabledForegroundColor: Colors.grey.withOpacity(0.38),
                                                               ),
                                                               onPressed: (){
                                                                 exhibitiionPresenter.generateInvoice(exhibitiionPresenter.dataListDetailExhibition, exhibitiionPresenter.dataListExhibition[index]['salesOrderId'], exhibitiionPresenter.dataListExhibition[indexes]);
@@ -1280,7 +1270,7 @@ class _ExhibitionPageState extends State<ExhibitionPage> {
                                               Get.bottomSheet(
                                                 // Container(),
                                                   ListView.builder(
-                                                      itemCount: exhibitiionPresenter.dataListDetailExhibition?.length??0,
+                                                      itemCount: exhibitiionPresenter.dataListDetailExhibition.length??0,
                                                       itemBuilder: (context, index) {
                                                         return Column(
                                                           children: [
@@ -1290,9 +1280,7 @@ class _ExhibitionPageState extends State<ExhibitionPage> {
                                                                 Spacer(),
                                                                 TextButton(
                                                                   style: TextButton.styleFrom(
-                                                                    primary: Colors.white,
-                                                                    backgroundColor: Colors.lightBlue,
-                                                                    onSurface: Colors.grey,
+                                                                    foregroundColor: Colors.white, backgroundColor: Colors.lightBlue, disabledForegroundColor: Colors.grey.withOpacity(0.38),
                                                                   ),
                                                                   onPressed: (){
                                                                     print("kow :$index ${exhibitiionPresenter.dataListDetailExhibition}");

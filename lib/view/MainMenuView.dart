@@ -11,10 +11,7 @@ import 'package:flutter_scs/models/absent/AbsentResponse.dart';
 import 'package:flutter_scs/state_management/getx/AbsentController.dart';
 import 'package:flutter_scs/state_management/getx/ReportSalesController.dart';
 import 'package:flutter_scs/view/ListCustomerView.dart';
-import 'package:flutter_scs/view/approval-promo/approval-promo-page.dart';
 import 'package:flutter_scs/view/login/LoginView.dart';
-import 'package:flutter_scs/view/set-promo/set-promo-page.dart';
-import 'package:flutter_scs/view/set-promo/set-promo-presenter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -23,8 +20,6 @@ import 'package:hive/hive.dart';
 import 'package:location_permissions/location_permissions.dart';
 
 import 'AbsentView.dart';
-import 'exhibition-alt/ehixbition-page-alt.dart';
-import 'exhibition/exhibition-page.dart';
 
 class MainMenuView extends StatefulWidget {
   @override
@@ -160,7 +155,7 @@ class _MainMenuViewState extends State<MainMenuView> {
             children: <Widget>[
               Container(
                 color: colorBlueDark,
-                height: MediaQuery.of(context).size.height / 4,
+                height: MediaQuery.of(context).size.height / 5,
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
@@ -358,7 +353,7 @@ class _MainMenuViewState extends State<MainMenuView> {
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           width: MediaQuery.of(context).size.width / 3,
                           child: Text(
-                            state!.date!,
+                            state.date!,
                             style: textChildCard,
                             textAlign: TextAlign.left,
                           )),
@@ -418,7 +413,7 @@ class _MainMenuViewState extends State<MainMenuView> {
                       children: [
                     Text('Your Location'),
                     Text(
-                        '${state!.currentPosition!.latitude}; ${state!.currentPosition!.longitude}'),
+                        '${state!.currentPosition!.latitude}; ${state.currentPosition!.longitude}'),
                     SizedBox(height: 10),
                     Row(
                       mainAxisSize: MainAxisSize.max,
@@ -508,9 +503,6 @@ class _MainMenuViewState extends State<MainMenuView> {
   void absent(int status, String idSales, Position currentPosition,
       AbsentResponse dataAbsent) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    if (idSales == null) {
-      idSales = preferences.getString("idSales")!;
-    }
     int code =
         await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AbsentView(

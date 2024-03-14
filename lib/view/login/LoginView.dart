@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_scs/adapters/CheckCondition.dart';
 import 'package:flutter_scs/state_management/providers/LoginProvider.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_scs/assets/style.dart';
@@ -13,7 +12,6 @@ import 'package:flutter_scs/models/Customer.dart';
 import 'package:flutter_scs/models/Employee.dart';
 import 'package:flutter_scs/models/PriceDiscount.dart';
 import 'package:flutter_scs/models/Product.dart';
-import 'package:flutter_scs/view/MainMenuView.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
@@ -58,7 +56,7 @@ class _LoginViewState extends State<LoginView> {
       _usernameController.text = username;
       _passwordController.text = password;
       isExhibition = exhibition;
-      _ipAddressController.text = box.read("ipAddress")??"hrms.prb.co.id:8877";
+      _ipAddressController.text = box.read("ipAddress")??"api-scs.prb.co.id";
     });
   }
 
@@ -461,7 +459,7 @@ class _LoginViewState extends State<LoginView> {
         } else {
           String _idSales = result[1];
           String dateLogin = DateFormat("ddMMMyyyy").format(DateTime.now());
-          setPreference(username, _message, _idSales, value!.token!, dateLogin);
+          setPreference(username, _message, _idSales, value.token!, dateLogin);
           getAllData(value.token!, username);
           if(value.token!=null){
             // Get.offAll(MainMenuView());

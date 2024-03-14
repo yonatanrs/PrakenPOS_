@@ -41,7 +41,7 @@ class ExhibitionModel {
 
 class DataProduct {
   String? namaProduct;
-  dynamic? qty;
+  dynamic qty;
   String? uom;
   dynamic discount;
   dynamic price;

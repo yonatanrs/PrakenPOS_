@@ -1,11 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/ConditionNull.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/TextResultCard.dart';
@@ -14,7 +10,6 @@ import 'package:flutter_scs/mobile_sms/lib/models/Promosi.dart';
 import 'package:flutter_scs/mobile_sms/lib/providers/LinesProvider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +23,6 @@ import '../models/ApiConstant.dart';
 import '../models/User.dart';
 import 'HistoryNomorPP.dart';
 import 'HistorySO.dart';
-import 'dashboard/DashboardPage.dart';
 import 'dashboard/dashboard_approvalpp.dart';
 
 class HistoryLines extends StatefulWidget {
@@ -90,7 +84,7 @@ class _HistoryLinesState extends State<HistoryLines> {
   List dataUnit = [];
 
   getUnit(String itemId) async {
-    var url = "http://119.18.157.236:8878/api/Unit?item=${itemId}";
+    var url = "http://119.18.157.236:8878/api/Unit?item=$itemId";
     print("urlGetUnit : $url");
     final response = await get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -105,7 +99,7 @@ class _HistoryLinesState extends State<HistoryLines> {
   List dataSupplyUnit = [];
 
   getSupplyUnit(String itemId) async {
-    var url = "http://119.18.157.236:8878/api/Unit?item=${itemId}";
+    var url = "http://119.18.157.236:8878/api/Unit?item=$itemId";
     print("urlGetSupplyUnit : $url");
     final response = await get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -280,15 +274,15 @@ class _HistoryLinesState extends State<HistoryLines> {
                                 var suppItemLinesAlt = suppItemlines[index];
                                 final dataAddToLines = jsonEncode(<String, dynamic>{
                                   "id": idLines[index],
-                                  "qtyFrom": qtyFromController[index].text == null || qtyFromController[index].text == ""? qtyFromLines[index]: double.parse(qtyFromController[index].text),
-                                  "qtyTo": qtyToController[index].text == null || qtyToController[index].text == ""? qtyToLines[index]: double.parse(qtyToController[index].text),
+                                  "qtyFrom": qtyFromController[index].text == ""? qtyFromLines[index]: double.parse(qtyFromController[index].text),
+                                  "qtyTo": qtyToController[index].text == ""? qtyToLines[index]: double.parse(qtyToController[index].text),
                                   "unit": unitController[index] == null ? unitlines[index] : unitController[index],
-                                  "disc1": disc1Controller[index].text == null || disc1Controller[index].text == "" ? disc1lines[index] : double.parse(disc1Controller[index].text),
-                                  "disc2": disc2Controller[index].text == null || disc2Controller[index].text == "" ? disc2lines[index] : double.parse(disc2Controller[index].text),
-                                  "disc3": disc3Controller[index].text == null || disc3Controller[index].text == "" ? disc3lines[index] : double.parse(disc3Controller[index].text),
-                                  "disc4": disc4Controller[index].text == null || disc4Controller[index].text == "" ? disc4lines[index] : double.parse(disc4Controller[index].text),
-                                  "value1": value1Controller[index].text == null || value1Controller[index].text == "" ? value1lines[index] : double.parse(value1Controller[index].text.replaceAll(",", "").replaceAll(".", "").toString()),
-                                  "value2": value2Controller[index].text == null || value2Controller[index].text == "" ? value2lines[index] : double.parse(value2Controller[index].text.replaceAll(",", "").replaceAll(".", "").toString()),
+                                  "disc1": disc1Controller[index].text == "" ? disc1lines[index] : double.parse(disc1Controller[index].text),
+                                  "disc2": disc2Controller[index].text == "" ? disc2lines[index] : double.parse(disc2Controller[index].text),
+                                  "disc3": disc3Controller[index].text == "" ? disc3lines[index] : double.parse(disc3Controller[index].text),
+                                  "disc4": disc4Controller[index].text == "" ? disc4lines[index] : double.parse(disc4Controller[index].text),
+                                  "value1": value1Controller[index].text == "" ? value1lines[index] : double.parse(value1Controller[index].text.replaceAll(",", "").replaceAll(".", "").toString()),
+                                  "value2": value2Controller[index].text == "" ? value2lines[index] : double.parse(value2Controller[index].text.replaceAll(",", "").replaceAll(".", "").toString()),
                                   "suppQty": suppQtyController[index].text == null ? suppQtylines[index] : double.parse(suppQtyController[index].text),
                                   "suppItem": suppItemController[index] == null ? suppItemLinesAlt : suppItemController[index].split(" ").first,
                                   "suppUnit": suppUnitController[index] == null ? suppUnitlines[index] : suppUnitController[index],
@@ -298,7 +292,7 @@ class _HistoryLinesState extends State<HistoryLines> {
                                 });
                                 setState(() {
                                   addToLines.add(dataAddToLines);
-                                  print("addToLInes checklist : ${addToLines}");
+                                  print("addToLInes checklist : $addToLines");
                                   print("addToLInes checklist : ${addToLines.length}");
                                 });
                               }
@@ -306,7 +300,7 @@ class _HistoryLinesState extends State<HistoryLines> {
                               _listHistorySO.map((e) => e.status = false).toList();
                               setState(() {
                                 addToLines.clear();
-                                print("addToLInes not checklist : ${addToLines}");
+                                print("addToLInes not checklist : $addToLines");
                                 print("addToLInes not checklist : ${addToLines.length}");
                               });
                             }
@@ -417,197 +411,187 @@ class _HistoryLinesState extends State<HistoryLines> {
                 onRefresh: listHistorySO,
                 child: FutureBuilder(
                   future: Promosi.getListLinesPending(
-                      widget.numberPP!, code, _user!.token!, _user!.username),
+                      widget.numberPP!, code, _user.token!, _user.username),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     _listHistorySO == null
                         ? _listHistorySO = snapshot.data
                         : _listHistorySO = _listHistorySO;
-                    if (_listHistorySO == null) {
-                      return Container(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            semanticsLabel: "Loading...",
-                          ),
-                        ),
-                      );
+                    if (_listHistorySO[0].codeError == 404 ||
+                        _listHistorySO[0].codeError == 303) {
+                      return ConditionNull(
+                          message: _listHistorySO[0].message);
                     } else {
-                      if (_listHistorySO[0].codeError == 404 ||
-                          _listHistorySO[0].codeError == 303) {
-                        return ConditionNull(
-                            message: _listHistorySO[0].message);
-                      } else {
-                        return startApp == false
-                            ? Center(child: CircularProgressIndicator())
-                            : SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          TextResultCard(
-                                            context: context,
-                                            title: "No. PP",
-                                            value: RegExp(r"\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}")
-                                                            .hasMatch(dataHeader[
-                                                                    0]
-                                                                ["nomorPP"]) ==
-                                                        true
-                                                    ? dataHeader[0]["nomorPP"]
-                                                        .replaceRange(
-                                                            34, null, "")
-                                                    : dataHeader[0]["nomorPP"],
-                                          ),
-                                          TextResultCard(
-                                            context: context,
-                                            title: "PP. Type",
-                                            value: "${dataHeader[0]["type"]}",
-                                          ),
-                                          TextResultCard(
-                                            context: context,
-                                            title: "Customer",
-                                            value: "${dataHeader[0]["customer"]}",
-                                          ),
-                                          TextResultCard(
-                                            context: context,
-                                            title: "Note",
-                                            value: "${dataHeader[0]["note"]}",
-                                          ),
-                                          Container(
-                                              width: ScreenUtil().setHeight(
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 5),
-                                              child: Consumer<LinesProvider>(
-                                                  builder:
-                                                      (context, linesProv, _) {
-                                                fromDateHeaderController.text =
-                                                    dataHeader[0]['fromDate']
-                                                        .split(" ")
-                                                        .first;
-                                                return TextFormField(
-                                                  readOnly: true,
-                                                  controller:
-                                                      fromDateHeaderController,
-                                                  keyboardType:
-                                                      TextInputType.datetime,
-                                                  onTap: () async {
-                                                    final selectedDate =
-                                                        await showDatePicker(
-                                                      context: context,
-                                                      initialDate:
-                                                          DateTime.now(),
-                                                      firstDate: DateTime.now()
-                                                          .subtract(Duration(
-                                                              days: 365)),
-                                                      lastDate: DateTime.now()
-                                                          .add(Duration(
-                                                              days: 365)),
-                                                    );
-                                                    if (selectedDate != null) {
-                                                      fromDateHeaderController
-                                                          .text = DateFormat(
-                                                              'dd/MMM/yyyy')
-                                                          .format(selectedDate);
-                                                    }
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                      filled: true,
-                                                      labelText: 'From Date',
-                                                      hintStyle: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontSize: 15),
-                                                      errorStyle: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .errorColor,
-                                                          fontSize: 15)),
-                                                );
-                                              })),
-                                          Container(
-                                              width: ScreenUtil().setHeight(
-                                                  MediaQuery.of(context)
-                                                      .size
-                                                      .width),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 5),
-                                              child: Consumer<LinesProvider>(
-                                                  builder:
-                                                      (context, linesProv, _) {
-                                                toDateHeaderController.text =
-                                                    dataHeader[0]['toDate']
-                                                        .split(" ")
-                                                        .first;
-                                                return TextFormField(
-                                                  readOnly: true,
-                                                  controller:
-                                                      toDateHeaderController,
-                                                  keyboardType:
-                                                      TextInputType.datetime,
-                                                  onTap: () async {
-                                                    final selectedDate =
-                                                        await showDatePicker(
-                                                      context: context,
-                                                      initialDate:
-                                                          DateTime.now(),
-                                                      firstDate: DateTime.now()
-                                                          .subtract(Duration(
-                                                              days: 365)),
-                                                      lastDate: DateTime.now()
-                                                          .add(Duration(
-                                                              days: 365)),
-                                                    );
-                                                    if (selectedDate != null) {
-                                                      toDateHeaderController
-                                                          .text = DateFormat(
-                                                              'dd/MMM/yyyy')
-                                                          .format(selectedDate);
-                                                    }
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                      filled: true,
-                                                      labelText: 'To Date',
-                                                      hintStyle: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
-                                                          fontSize: 15),
-                                                      errorStyle: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .errorColor,
-                                                          fontSize: 15)),
-                                                );
-                                              })),
-                                        ],
-                                      ),
+                      return startApp == false
+                          ? Center(child: CircularProgressIndicator())
+                          : SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        TextResultCard(
+                                          context: context,
+                                          title: "No. PP",
+                                          value: RegExp(r"\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}")
+                                                          .hasMatch(dataHeader[
+                                                                  0]
+                                                              ["nomorPP"]) ==
+                                                      true
+                                                  ? dataHeader[0]["nomorPP"]
+                                                      .replaceRange(
+                                                          34, null, "")
+                                                  : dataHeader[0]["nomorPP"],
+                                        ),
+                                        TextResultCard(
+                                          context: context,
+                                          title: "PP. Type",
+                                          value: "${dataHeader[0]["type"]}",
+                                        ),
+                                        TextResultCard(
+                                          context: context,
+                                          title: "Customer",
+                                          value: "${dataHeader[0]["customer"]}",
+                                        ),
+                                        TextResultCard(
+                                          context: context,
+                                          title: "Note",
+                                          value: "${dataHeader[0]["note"]}",
+                                        ),
+                                        Container(
+                                            width: ScreenUtil().setHeight(
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width),
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 5),
+                                            child: Consumer<LinesProvider>(
+                                                builder:
+                                                    (context, linesProv, _) {
+                                              fromDateHeaderController.text =
+                                                  dataHeader[0]['fromDate']
+                                                      .split(" ")
+                                                      .first;
+                                              return TextFormField(
+                                                readOnly: true,
+                                                controller:
+                                                    fromDateHeaderController,
+                                                keyboardType:
+                                                    TextInputType.datetime,
+                                                onTap: () async {
+                                                  final selectedDate =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    initialDate:
+                                                        DateTime.now(),
+                                                    firstDate: DateTime.now()
+                                                        .subtract(Duration(
+                                                            days: 365)),
+                                                    lastDate: DateTime.now()
+                                                        .add(Duration(
+                                                            days: 365)),
+                                                  );
+                                                  if (selectedDate != null) {
+                                                    fromDateHeaderController
+                                                        .text = DateFormat(
+                                                            'dd/MMM/yyyy')
+                                                        .format(selectedDate);
+                                                  }
+                                                },
+                                                decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    filled: true,
+                                                    labelText: 'From Date',
+                                                    hintStyle: TextStyle(
+                                                        color:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                        fontSize: 15),
+                                                    errorStyle: TextStyle(
+                                                        color:
+                                                            Theme.of(context)
+                                                                .colorScheme.error,
+                                                        fontSize: 15)),
+                                              );
+                                            })),
+                                        Container(
+                                            width: ScreenUtil().setHeight(
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width),
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 5),
+                                            child: Consumer<LinesProvider>(
+                                                builder:
+                                                    (context, linesProv, _) {
+                                              toDateHeaderController.text =
+                                                  dataHeader[0]['toDate']
+                                                      .split(" ")
+                                                      .first;
+                                              return TextFormField(
+                                                readOnly: true,
+                                                controller:
+                                                    toDateHeaderController,
+                                                keyboardType:
+                                                    TextInputType.datetime,
+                                                onTap: () async {
+                                                  final selectedDate =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    initialDate:
+                                                        DateTime.now(),
+                                                    firstDate: DateTime.now()
+                                                        .subtract(Duration(
+                                                            days: 365)),
+                                                    lastDate: DateTime.now()
+                                                        .add(Duration(
+                                                            days: 365)),
+                                                  );
+                                                  if (selectedDate != null) {
+                                                    toDateHeaderController
+                                                        .text = DateFormat(
+                                                            'dd/MMM/yyyy')
+                                                        .format(selectedDate);
+                                                  }
+                                                },
+                                                decoration: InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(),
+                                                    filled: true,
+                                                    labelText: 'To Date',
+                                                    hintStyle: TextStyle(
+                                                        color:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                        fontSize: 15),
+                                                    errorStyle: TextStyle(
+                                                        color:
+                                                            Theme.of(context)
+                                                                .colorScheme.error,
+                                                        fontSize: 15)),
+                                              );
+                                            })),
+                                      ],
                                     ),
-                                    ListView.builder(
-                                      itemCount: _listHistorySO?.length,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.only(
-                                          bottom: Get.height - 655),
-                                      shrinkWrap: true,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return CardLinesAdapter(widget.numberPP!,
-                                            _listHistorySO[index], index);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                      }
+                                  ),
+                                  ListView.builder(
+                                    itemCount: _listHistorySO.length,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    padding: EdgeInsets.only(
+                                        bottom: Get.height - 655),
+                                    shrinkWrap: true,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return CardLinesAdapter(widget.numberPP!,
+                                          _listHistorySO[index], index);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
                     }
-                  },
+                                    },
                 ),
               ),
             ),
@@ -689,27 +673,27 @@ class _HistoryLinesState extends State<HistoryLines> {
                             var suppItemLinesAlt = suppItemlines[index];
                             final dataAddToLines = jsonEncode(<String, dynamic>{
                               "id": idLines[index],
-                              "qtyFrom": qtyFromController[index].text == null || qtyFromController[index].text == ""? qtyFromLines[index]: double.parse(qtyFromController[index].text),
-                              "qtyTo": qtyToController[index].text == null || qtyToController[index].text == ""? qtyToLines[index]: double.parse(qtyToController[index].text),
+                              "qtyFrom": qtyFromController[index].text == ""? qtyFromLines[index]: double.parse(qtyFromController[index].text),
+                              "qtyTo": qtyToController[index].text == ""? qtyToLines[index]: double.parse(qtyToController[index].text),
                               "unit": unitController[index] == null ? unitlines[index] : unitController[index],
                               "disc1":
-                              disc1Controller[index].text == null || disc1Controller[index].text == ""
+                              disc1Controller[index].text == ""
                                   ? disc1lines[index]
                                   : double.parse(disc1Controller[index].text),
                               "disc2":
-                              disc2Controller[index].text == null || disc2Controller[index].text == ""
+                              disc2Controller[index].text == ""
                                   ? disc2lines[index]
                                   : double.parse(disc2Controller[index].text),
                               "disc3":
-                              disc3Controller[index].text == null || disc3Controller[index].text == ""
+                              disc3Controller[index].text == ""
                                   ? disc3lines[index]
                                   : double.parse(disc3Controller[index].text),
                               "disc4":
-                              disc4Controller[index].text == null || disc4Controller[index].text == ""
+                              disc4Controller[index].text == ""
                                   ? disc4lines[index]
                                   : double.parse(disc4Controller[index].text),
                               "value1":
-                              value1Controller[index].text == null || value1Controller[index].text == ""
+                              value1Controller[index].text == ""
                                   ? value1lines[index]
                                   : double.parse(value1Controller[index]
                                   .text
@@ -717,7 +701,7 @@ class _HistoryLinesState extends State<HistoryLines> {
                                   .replaceAll(".", "")
                                   .toString()),
                               "value2":
-                              value2Controller[index].text == null || value2Controller[index].text == ""
+                              value2Controller[index].text == ""
                                   ? value2lines[index]
                                   : double.parse(value2Controller[index]
                                   .text
@@ -748,11 +732,11 @@ class _HistoryLinesState extends State<HistoryLines> {
                               value == true ? _statusDisable = false : _statusDisable = true;
                               if(value==true){
                                 addToLines.add(dataAddToLines);
-                                print("addToLInes : ${addToLines}");
+                                print("addToLInes : $addToLines");
                                 print("addToLInes : ${addToLines.length}");
                               }else{
                                 addToLines.remove(dataAddToLines);
-                                print("addToLInes : ${addToLines}");
+                                print("addToLInes : $addToLines");
                                 print("addToLInes : ${addToLines.length}");
                               }
                             });
@@ -1494,27 +1478,27 @@ class _HistoryLinesState extends State<HistoryLines> {
       var suppItemLinesAlt = suppItemlines[i];
       lines.add({
         "id": idLines[i],
-        "qtyFrom": qtyFromController[i].text == null || qtyFromController[i].text == ""? qtyFromLines[i]: double.parse(qtyFromController[i].text),
-        "qtyTo": qtyToController[i].text == null || qtyToController[i].text == ""? qtyToLines[i]: double.parse(qtyToController[i].text),
+        "qtyFrom": qtyFromController[i].text == ""? qtyFromLines[i]: double.parse(qtyFromController[i].text),
+        "qtyTo": qtyToController[i].text == ""? qtyToLines[i]: double.parse(qtyToController[i].text),
         "unit": unitController[i] == null ? unitlines[i] : unitController[i],
         "disc1":
-            disc1Controller[i].text == null || disc1Controller[i].text == ""
+            disc1Controller[i].text == ""
                 ? disc1lines[i]
                 : double.parse(disc1Controller[i].text),
         "disc2":
-            disc2Controller[i].text == null || disc2Controller[i].text == ""
+            disc2Controller[i].text == ""
                 ? disc2lines[i]
                 : double.parse(disc2Controller[i].text),
         "disc3":
-            disc3Controller[i].text == null || disc3Controller[i].text == ""
+            disc3Controller[i].text == ""
                 ? disc3lines[i]
                 : double.parse(disc3Controller[i].text),
         "disc4":
-            disc4Controller[i].text == null || disc4Controller[i].text == ""
+            disc4Controller[i].text == ""
                 ? disc4lines[i]
                 : double.parse(disc4Controller[i].text),
         "value1":
-            value1Controller[i].text == null || value1Controller[i].text == ""
+            value1Controller[i].text == ""
                 ? value1lines[i]
                 : double.parse(value1Controller[i]
                     .text
@@ -1522,7 +1506,7 @@ class _HistoryLinesState extends State<HistoryLines> {
                     .replaceAll(".", "")
                     .toString()),
         "value2":
-            value2Controller[i].text == null || value2Controller[i].text == ""
+            value2Controller[i].text == ""
                 ? value2lines[i]
                 : double.parse(value2Controller[i]
                     .text
@@ -1556,8 +1540,8 @@ class _HistoryLinesState extends State<HistoryLines> {
       'lines': jsonDecode(addToLines.toString()),//lines
     });
     log("isi BodyApprove: $isiBody");
-    print("idLines: ${idLines}");
-    print("url: ${url}");
+    print("idLines: $idLines");
+    print("url: $url");
     final response = await put(
       Uri.parse(url),
       headers: <String, String>{

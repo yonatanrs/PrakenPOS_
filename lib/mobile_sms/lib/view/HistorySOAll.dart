@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/ConditionNull.dart';
 import 'package:flutter_scs/mobile_sms/lib/assets/widgets/SalesOrderAdapter.dart';
 import 'package:flutter_scs/mobile_sms/lib/models/Promosi.dart';
@@ -10,7 +9,6 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'HistoryLines.dart';
 
 
 class HistorySOAll extends StatefulWidget {
